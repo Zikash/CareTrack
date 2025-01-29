@@ -2,7 +2,7 @@
     <div>
         <header class="header">
         
-            <div class="logo">
+            <div class="logo" @click="$router.push('/')">
                 <div class="icon">
                 </div>
                 <div class="name">
@@ -31,7 +31,7 @@
         <div class="nauth" v-else>
             <div>
                 <btn-auth @click="swapAuth" class="btn join"><h3>Войти</h3></btn-auth>
-                <btn-auth @click="swapAuth" class="btn reg"><h3>Зарегистрироваться</h3></btn-auth>
+                <btn-auth @click="$router.push('/registration')" class="btn reg"><h3>Зарегистрироваться</h3></btn-auth>
             </div>
         </div>
         
@@ -60,7 +60,7 @@
 </script>
 
 
-<style>
+<style scoped>
     * {
         color: black
     }
@@ -81,15 +81,11 @@
     }
 
     .icon {
-        /*
         margin-left: 6px;
         align-self: center;
         background: red;
         height: 40px;
         width: 40px;
-        */
-
-        background: url("@/Assets/iapteca.jpg");
     }
 
     .name {
