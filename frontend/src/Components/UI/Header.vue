@@ -81,11 +81,15 @@
     }
 
     .icon {
+        /*
         margin-left: 6px;
         align-self: center;
         background: red;
         height: 40px;
         width: 40px;
+        */
+
+        background: url("@/Assets/iapteca.jpg");
     }
 
     .name {
