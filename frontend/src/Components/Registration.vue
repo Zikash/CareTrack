@@ -1,51 +1,128 @@
 <template>
         
-        <div>
             
-            <h2>Регистрация</h2>
-            <form @event.submit class="form">
-                <!--<div class="main__left">
-                    <h3>Фамилия</h3>
-                    <input/>
+            <form class="form" @submit.prevent>
+                
+                <div class="main">
+                    <h2 class="name">Регистрация</h2>
+                
+                    <div class="main__view">
 
-                    <h3>Имя</h3>
-                    <input/>
+                        <h3 class="info_">{{ info }}</h3>
 
-                    <h3>Отчество</h3>
-                    <input/>
+                        <div class="main__content">
+                            <ul class="content__left">
+                                <li class="content__element">
+                                    <h3>Фамилия</h3>
+                                    <input v-model="surname_Client" class="surname_input input" type="text">
 
-                    <h3>Пол</h3>
-                    <div>
+                                </li>
+                                <li class="content__element">
+                                    <h3>Имя</h3>
+                                    <input v-model="name_Client" class="name_input input" type="text">
+                                </li>
+                                <li class="content__element">
+                                    <h3>Отчество</h3>
+                                    <input v-model="patronimyc_Client" class="patronimyc_input input" type="text">
+                                </li>
+                                <li class="content__element">
+                                    <h3>Пол</h3>
+                                    <input v-model="gender" class="radio__gender" name="gender" type="radio" value="Male"><strong>М</strong>
+                                    <input v-model="gender" class="radio__gender" name="gender" type="radio" value="Female"><Strong>Ж</Strong>
+                                </li>
+                                <li class="content__element">
+                                    <h3>Возраст</h3>
+                                    <input v-model="age" class="age__input" min="0" type="number">
+                                </li>
+
+                            </ul>
+                            <ul class="content__right">
+                                <li class="content__element">
+                                    <h3>Телефон</h3>
+                                    <input v-model="number_Phone" class="number__input input" type="text">
+                                </li>
+                                <li class="content__element">
+                                    <h3>Адрес</h3>
+                                    <textarea v-model="address" class="address__input" type="text"></textarea>
+                                </li>
+                                <li class="content__element">
+                                    <h3>Пароль</h3>
+                                    <input v-model="password" class="password__input input" type="password">
+                                </li>
+                                <li class="content__element">
+                                    <h3>Подтверждение пароля</h3>
+                                    <input v-model="double_Password" class="double__password input" type="password">
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="wrapper">
+                            <button @click="AddUser($router)" class="btn">Зарегистрироваться</button>
+                        </div>
+
+                        
                     </div>
-
-                    <h3>Возраст</h3>
-                    <input/>
                 </div>
-                <div class="main__right">
-
-                    <h3>Номер</h3>
-                    <input/>
-
-                    <h3>Адрес</h3>
-                    <input/>
-                    <br/>
-                    <button>Зарегистрироваться</button>
-
-                </div>-->
+                
+                
             </form>
-
-        </div>
 
 </template>
 
 
 
 <script>
+import { initCustomFormatter } from 'vue';
+
 
     export default {
         data() {
             return {
-                Name: "Регистрация"
+                surname_Client: "",
+                name_Client: "",
+                patronimyc_Client: "",
+                gender: "",
+                age: 1,
+                number_Phone: "",
+                address: "",
+                password: "",
+                double_Password: "",
+                info: ""
+            }
+        },
+        methods: {
+            AddUser(router) {
+
+                this.info = ""
+
+                if (this.surname_Client.length <= 1){
+                    this.info = "Фамилия короткая"
+                }else if (this.name_Client.length <= 1){
+                    this.info = "Имя короткое"
+                }else if (this.patronimyc_Client.length <= 1){
+                    this.info = "Отчество короткое"
+                }else if (this.gender === ""){
+                    this.info = "Не выбран пол"
+                }else if (this.number_Phone.length < 10){
+                    this.info = "Некорректный номер телефона"
+                }else if (this.address === ""){
+                    this.info = "Не введён адрес"
+                }else if (this.password.length < 8){
+                    this.info = "Пароль короткий минимум 8 символов"
+                }else if (this.password != this.double_Password){
+                    this.info = "Пароли должны совпадать"
+                }
+
+
+                
+                if (this.info === ""){
+                    //Сюда свойство регистрации
+
+                    alert("Аккаунт успешно зарегистрирован")
+                    router.push("/")
+                }
+                
             }
         }
     }
@@ -54,22 +131,120 @@
 
 
 <style scoped>
-    /* .form {
+
+
+*
+
+    input {
+        background-color: #F0EEEE;
+    }
+
+    textarea {
+        background-color: #F0EEEE;
+    }
+
+
+    .form {
+        display: flex;
+    }
+
+    .main {
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .name {
+        background-color: white;
+        width: 30%;
+        border-radius: 10px 10px 0 0;
+        align-content: center;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    .main__view {
+        background-color: white;
+        padding: 35px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 0px 10px 10px 10px;
+    }
+
+    .main__content {
+        background-color: white;
+        padding: 15px;
         display: flex;
         margin-left: auto;
         margin-right: auto;
+        border-radius: 0px 0px 10px 10px;
     }
 
-    .main__left {
-        background-color: white;
-        margin-right: auto;
-        float: left;
+    .info_ {
+        color: red;
+        max-width: 300px;
     }
 
-    .main__right {
-        float: right;
+    .content__left {
+        margin-left: 20px;
+        margin-right: 100px;
+    }
+
+    .content__element {
+        list-style-type: none;
+        margin-bottom: 10px;
+    }
+
+    .content__element h3 {
+        margin-bottom: 5px;;
+    }
+
+
+    .wrapper {
+        text-align: center;
+    }
+
+
+    .btn {
         margin-left: auto;
-        background-color: white;
-    }*/
+        margin-right: auto;
+        margin-top: 10px;
+        background-color: green;
+        text-align: center;
+        align-content: center;
+        border-radius: 5px;
+        font-size: 20px;
+        padding: 10px;
+    }
+    
+
+    strong {
+        margin-right: 15px;
+    }
+
+
+    .age__input {
+        width: 70px;
+        height: 30px;
+        font-size: 20px;
+    }
+
+
+
+    .address__input {
+        min-width: 200px;
+        min-height: 50px;
+        font-size: 20px;
+    }
+
+    .input {
+        min-width: 200px;
+        min-height: 25px;
+        font-size: 20px;
+    }
+
+    
+
+
 
 </style>
