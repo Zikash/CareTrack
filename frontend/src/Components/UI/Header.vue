@@ -1,4 +1,5 @@
 <template>
+
     <div>
         <header class="header">
         
@@ -34,8 +35,6 @@
                 <btn-auth @click="$router.push('/registration')" class="btn reg"><h3>Зарегистрироваться</h3></btn-auth>
             </div>
         </div>
-        
-
     </div>
     
 </template>
@@ -70,9 +69,11 @@
     }
 
     .header {
+        top: 0;
         height: 60px;
         background-color: #009933;
         display: flex;
+        position: sticky;
     }
 
     .logo {
