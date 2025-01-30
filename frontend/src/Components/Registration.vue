@@ -2,8 +2,9 @@
         
         <div>
             
-            <my-form :Name="Name" class="form">
-                <div class="main__left">
+            <h2>Регистрация</h2>
+            <form @event.submit class="form">
+                <!--<div class="main__left">
                     <h3>Фамилия</h3>
                     <input/>
 
@@ -30,8 +31,8 @@
                     <br/>
                     <button>Зарегистрироваться</button>
 
-                </div>
-            </my-form>
+                </div>-->
+            </form>
 
         </div>
 
@@ -53,7 +54,7 @@
 
 
 <style scoped>
-    .form {
+    /* .form {
         display: flex;
         margin-left: auto;
         margin-right: auto;
@@ -69,6 +70,6 @@
         float: right;
         margin-left: auto;
         background-color: white;
-    }
+    }*/
 
 </style>
