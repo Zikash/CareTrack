@@ -1,6 +1,5 @@
 <template>
   <div class="app">
-    <my-header/>
     <router-view></router-view>
   </div>
 </template>
@@ -18,5 +17,12 @@
     margin: 0;
     box-sizing: border-box;
   }
+
+  .MyHeader {
+    z-index: 1000;
+    top: 0;
+    position: sticky;
+  }
+
 
 </style>

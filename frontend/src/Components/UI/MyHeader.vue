@@ -1,8 +1,9 @@
 <template>
-    <div>
+
+    <div class="MyHeader">
         <header class="header">
         
-            <div class="logo">
+            <div class="logo" @click="$router.push('/')">
                 <div class="icon">
                 </div>
                 <div class="name">
@@ -23,19 +24,17 @@
             </ul>
         </header>
 
-        <div class="auth" v-if="Auth">
+        <div class="auth" v-if="$store.getters.isAuth">
             <div>
-                <btn-auth @click="swapAuth" class="btn"><h3>Профиль</h3></btn-auth>   
+                <btn-auth @click="" class="btn"><h3>Профиль</h3></btn-auth>   
             </div>
         </div>
         <div class="nauth" v-else>
             <div>
-                <btn-auth @click="swapAuth" class="btn join"><h3>Войти</h3></btn-auth>
-                <btn-auth @click="swapAuth" class="btn reg"><h3>Зарегистрироваться</h3></btn-auth>
+                <btn-auth @click="$router.push('/authorization')" class="btn join"><h3>Войти</h3></btn-auth>
+                <btn-auth @click="$router.push('/registration')" class="btn reg"><h3>Зарегистрироваться</h3></btn-auth>
             </div>
         </div>
-        
-
     </div>
     
 </template>
@@ -44,23 +43,14 @@
 <script>
 
     export default {
-        name: "my-header",
-        data() {
-            return {
-                Auth: true
-            }
-        },
-        methods: {
-            swapAuth() {
-                this.Auth = !this.Auth
-            }
-        }
+        name: "my-header"
     }
 
 </script>
 
 
-<style>
+<style scoped>
+
     * {
         color: black
     }
@@ -70,9 +60,11 @@
     }
 
     .header {
+        top: 0;
         height: 60px;
         background-color: #009933;
         display: flex;
+        position: sticky;
     }
 
     .logo {

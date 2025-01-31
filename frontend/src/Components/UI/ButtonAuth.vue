@@ -12,7 +12,7 @@
 </script>
 
 
-<style>
+<style scoped>
     button {
         margin-top: 0px;
         padding-top: 0px;
