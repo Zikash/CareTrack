@@ -18,11 +18,11 @@
     box-sizing: border-box;
   }
 
-
   .MyHeader {
     z-index: 1000;
     top: 0;
     position: sticky;
   }
+
 
 </style>

@@ -24,7 +24,7 @@
             </ul>
         </header>
 
-        <div class="auth" v-if="$store.state.Auth">
+        <div class="auth" v-if="$store.getters.isAuth">
             <div>
                 <btn-auth @click="" class="btn"><h3>Профиль</h3></btn-auth>   
             </div>
