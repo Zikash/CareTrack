@@ -1,5 +1,5 @@
 <template>
-        
+            <my-header/>
             
             <form class="form" @submit.prevent>
                 
@@ -18,36 +18,36 @@
                             <ul class="content__left">
                                 <li class="content__element">
                                     <h3>Фамилия</h3>
-                                    <input v-model="surname_Client" class="surname_input input" type="text">
+                                    <input v-model="patient.surname_Client" class="surname_input input" type="text">
 
                                 </li>
                                 <li class="content__element">
                                     <h3>Имя</h3>
-                                    <input v-model="name_Client" class="name_input input" type="text">
+                                    <input v-model="patient.name_Client" class="name_input input" type="text">
                                 </li>
                                 <li class="content__element">
                                     <h3>Отчество</h3>
-                                    <input v-model="patronimyc_Client" class="patronimyc_input input" type="text">
+                                    <input v-model="patient.patronimyc_Client" class="patronimyc_input input" type="text">
                                 </li>
                                 <li class="content__element">
                                     <h3>Пол</h3>
-                                    <input v-model="gender" class="radio__gender" name="gender" type="radio" value="Male"><strong>М</strong>
-                                    <input v-model="gender" class="radio__gender" name="gender" type="radio" value="Female"><Strong>Ж</Strong>
+                                    <input v-model="patient.gender" class="radio__gender" name="gender" type="radio" value="Male"><strong>М</strong>
+                                    <input v-model="patient.gender" class="radio__gender" name="gender" type="radio" value="Female"><Strong>Ж</Strong>
                                 </li>
                                 <li class="content__element">
                                     <h3>Возраст</h3>
-                                    <input v-model="age" class="age__input" min="0" type="number">
+                                    <input v-model="patient.age" class="age__input" min="0" type="number">
                                 </li>
 
                             </ul>
                             <ul class="content__right">
                                 <li class="content__element">
                                     <h3>Телефон</h3>
-                                    <input v-model="number_Phone" class="number__input input" type="text">
+                                    <input v-model="patient.number_Phone" class="number__input input" type="text">
                                 </li>
                                 <li class="content__element">
                                     <h3>Адрес</h3>
-                                    <textarea v-model="address" class="address__input" type="text"></textarea>
+                                    <textarea v-model="patient.address" class="address__input" type="text"></textarea>
                                 </li>
                                 <li class="content__element">
                                     <h3>Пароль</h3>
@@ -62,7 +62,7 @@
                         </div>
 
                         <div class="wrapper">
-                            <button @click="AddUser($router)" class="btn">Зарегистрироваться</button>
+                            <button @click="AddUser($router, $store)" class="btn">Зарегистрироваться</button>
                         </div>
 
                         
@@ -83,34 +83,36 @@ import { initCustomFormatter } from 'vue';
     export default {
         data() {
             return {
-                surname_Client: "",
-                name_Client: "",
-                patronimyc_Client: "",
-                gender: "",
-                age: 1,
-                number_Phone: "",
-                address: "",
+                patient: {
+                    surname_Client: "",
+                    name_Client: "",
+                    patronimyc_Client: "",
+                    gender: "",
+                    age: 1,
+                    number_Phone: "",
+                    address: ""
+                },
                 password: "",
                 double_Password: "",
                 info: ""
             }
         },
         methods: {
-            AddUser(router) {
+            AddUser(router, store) {
 
                 this.info = ""
 
-                if (this.surname_Client.length <= 1){
+                if (this.patient.surname_Client.length <= 1){
                     this.info = "Фамилия короткая"
-                }else if (this.name_Client.length <= 1){
+                }else if (this.patient.name_Client.length <= 1){
                     this.info = "Имя короткое"
-                }else if (this.patronimyc_Client.length <= 1){
+                }else if (this.patient.patronimyc_Client.length <= 1){
                     this.info = "Отчество короткое"
-                }else if (this.gender === ""){
+                }else if (this.patient.gender === ""){
                     this.info = "Не выбран пол"
-                }else if (this.number_Phone.length < 10){
+                }else if (this.patient.number_Phone.length < 10){
                     this.info = "Некорректный номер телефона"
-                }else if (this.address === ""){
+                }else if (this.patient.address === ""){
                     this.info = "Не введён адрес"
                 }else if (this.password.length < 8){
                     this.info = "Пароль короткий минимум 8 символов"
@@ -122,6 +124,8 @@ import { initCustomFormatter } from 'vue';
                 
                 if (this.info === ""){
                     //Сюда свойство регистрации
+
+                    store.commit("updatePatient", this.patient)
 
                     alert("Аккаунт успешно зарегистрирован")
                     router.push("/")

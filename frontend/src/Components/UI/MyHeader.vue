@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div class="MyHeader">
         <header class="header">
         
             <div class="logo" @click="$router.push('/')">

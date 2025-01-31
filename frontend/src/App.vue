@@ -1,18 +1,12 @@
 <template>
   <div class="app">
-    <MyHeader class="main_header"/>
     <router-view></router-view>
   </div>
 </template>
 
 
 <script>
-  import MyHeader from "@/Components/MyHeader.vue";
-  export default {
-    components: {
-      MyHeader
-    }
-  }
+
 </script>
 
 
@@ -24,7 +18,8 @@
     box-sizing: border-box;
   }
 
-  .main_header {
+
+  .MyHeader {
     z-index: 1000;
     top: 0;
     position: sticky;

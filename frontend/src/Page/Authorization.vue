@@ -1,6 +1,6 @@
 <template>
         
-            
+    <my-header/>
     <form class="form" @submit.prevent>
         
         <div class="main">
@@ -75,8 +75,6 @@ methods: {
 
 <style scoped>
 
-
-*
 
 input {
 background-color: #F0EEEE;
