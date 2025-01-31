@@ -31,7 +31,7 @@
         </div>
         <div class="nauth" v-else>
             <div>
-                <btn-auth @click="swapAuth" class="btn join"><h3>Войти</h3></btn-auth>
+                <btn-auth @click="$router.push('/authorization')" class="btn join"><h3>Войти</h3></btn-auth>
                 <btn-auth @click="$router.push('/registration')" class="btn reg"><h3>Зарегистрироваться</h3></btn-auth>
             </div>
         </div>
@@ -43,17 +43,7 @@
 <script>
 
     export default {
-        name: "my-header",
-        data() {
-            return {
-                Auth: true
-            }
-        },
-        methods: {
-            swapAuth() {
-                this.Auth = !this.Auth
-            }
-        }
+        name: "my-header"
     }
 
 </script>
