@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Main from "@/Page/Main.vue";
 import Registration from "@/Page/Registration.vue";
 import Authorization from "@/Page/Authorization.vue";
+import Profile from "@/Page/Profile.vue";
 
 
 const routes = [
@@ -16,6 +17,10 @@ const routes = [
     {
         path: "/authorization",
         component: Authorization
+    },
+    {
+        path: "/profile",
+        component: Profile
     }
 ]
 

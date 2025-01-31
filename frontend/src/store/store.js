@@ -1,15 +1,14 @@
 import { createStore } from "vuex"; 
 
 export default createStore({
-    state: {
+    state: () => ({
         patient: null,
         doctor: null,
-        administator: null,
-        Auth: false
-    },
+        administrator: null,
+    }),
     getters: {
         isAuth(state) {
-            if (state.patient != null || state.doctor != null || state.administator != null){
+            if (state.patient != null || state.doctor != null || state.administrator != null){
                 return true
             }
             return false
@@ -22,8 +21,8 @@ export default createStore({
         updateDoctor(state, doctor){
             state.doctor = doctor
         },
-        updateAdministator(state, administator){
-            state.administator = administator
+        updateAdministrator(state, administrator){
+            state.administrator = administrator
         }
     }
 })
