@@ -4,7 +4,11 @@
             <form class="form" @submit.prevent>
                 
                 <div class="main">
-                    <h2 class="name">Регистрация</h2>
+                    <div class="headbar">
+                        <h2 class="name reg">Регистрация</h2>
+                        <h2 @click="$router.push('/authorization')" class="name auth">Авторизация</h2>
+                    </div>
+                    
                 
                     <div class="main__view">
 
@@ -154,13 +158,22 @@ import { initCustomFormatter } from 'vue';
         margin-right: auto;
     }
 
+    .headbar {
+        display: flex;
+    }
+
+    .auth {
+        box-shadow: 3px -3px 1px 0px rgba(34, 60, 80, 0.2) inset;
+    }
+
     .name {
         background-color: white;
-        width: 30%;
+        width: 40%;
         border-radius: 10px 10px 0 0;
         align-content: center;
         text-align: center;
         padding-top: 10px;
+        height: 50px;
     }
 
     .main__view {
