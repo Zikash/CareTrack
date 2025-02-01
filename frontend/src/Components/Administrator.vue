@@ -69,7 +69,11 @@
 
                     </div>
                     <div class="AllOsmotrs" v-if="thenPage === 'osmotrs'">
-                        <h2>Then Osmotrs</h2>
+                        
+                        <osmotr-bar 
+                        v-for="osmotr in osmotrs" 
+                        :osmotr="osmotr"/>
+
                     </div>
                     
                 </div>
@@ -113,7 +117,7 @@
                         Age: 6
                     },
                     {
-                        id: 1,
+                        id: 2,
                         Fio: "Haruton ebrog Afomon",
                         Phone: "8 888 099 73-89",
                         Gender: "М",
@@ -121,9 +125,47 @@
                     }
 
                 ],
-                osmotrs: {
-
-                }
+                osmotrs: [
+                    {
+                        id: 1,
+                        doctor: {
+                            id: 1,
+                            Fio: "Nikolay Pobelov Homonaft",
+                            Phone: "8 999 999 99-99",
+                            Place: 1,
+                            Stage: 1
+                        },
+                        patient: {
+                            id: 1,
+                            Fio: "Haruton ebrog Afomon",
+                            Phone: "8 888 099 73-89",
+                            Address: "moletare 17"
+                        },
+                        place: "Hospital",
+                        Date_this: "11.11.11",
+                        Time_this: "11:11"
+                    },
+                    {
+                        id: 2,
+                        doctor: {
+                            id: 2,
+                            Fio: "Nikolay Pobelov Homonaft",
+                            Phone: "8 999 988 99-99",
+                            Place: 2,
+                            Stage: 4
+                        },
+                        patient: {
+                            id: 2,
+                            Fio: "Haruton ebrog Afomon",
+                            Phone: "8 888 099 73-89",
+                            Address: "hoolersire h. 57"
+                        },
+                        place: "Home",
+                        Date_this: "11.11.11",
+                        Time_this: "11:66"
+                    }
+                ]
+                    
             }
         },
         methods: {
