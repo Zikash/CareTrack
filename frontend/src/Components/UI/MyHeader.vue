@@ -26,13 +26,13 @@
 
         <div class="auth" v-if="$store.getters.isAuth">
             <div>
-                <btn-auth @click="" class="btn"><h3>Профиль</h3></btn-auth>   
+                <btn-auth @click="$router.push('/profile')" class="btn"><h3>Профиль</h3></btn-auth>   
             </div>
         </div>
         <div class="nauth" v-else>
             <div>
-                <btn-auth @click="$router.push('/authorization')" class="btn join"><h3>Войти</h3></btn-auth>
-                <btn-auth @click="$router.push('/registration')" class="btn reg"><h3>Зарегистрироваться</h3></btn-auth>
+                <btn-auth @click="Auth" class="btn join"><h3>Войти</h3></btn-auth>
+                <btn-auth @click="Reg" class="btn reg"><h3>Зарегистрироваться</h3></btn-auth>
             </div>
         </div>
     </div>
@@ -43,7 +43,17 @@
 <script>
 
     export default {
-        name: "my-header"
+        name: "my-header",
+        methods: {
+            Auth() {
+                this.$store.commit("updateAuth", "auth")
+                this.$router.push("/authorization")
+            },
+            Reg() {
+                this.$store.commit("updateAuth", "reg")
+                this.$router.push("/authorization")
+            }
+        }
     }
 
 </script>

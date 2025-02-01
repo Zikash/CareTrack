@@ -5,6 +5,7 @@ export default createStore({
         patient: null,
         doctor: null,
         administrator: null,
+        auth: "auth"
     }),
     getters: {
         isAuth(state) {
@@ -23,6 +24,9 @@ export default createStore({
         },
         updateAdministrator(state, administrator){
             state.administrator = administrator
+        },
+        updateAuth(state, auth){
+            state.auth = auth
         }
     }
 })
