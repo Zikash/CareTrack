@@ -4,7 +4,7 @@ export default createStore({
     state: () => ({
         patient: null,
         doctor: null,
-        administrator: null,
+        administrator: {},
         auth: "auth"
     }),
     getters: {

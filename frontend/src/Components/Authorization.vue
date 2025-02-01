@@ -97,11 +97,13 @@ min-width: 500px;
 
 .headbar {
 display: flex;
+
 }
 
 .reg {
 box-shadow: -3px -3px 1px 0px rgba(34, 60, 80, 0.2) inset;
 }
+
 
 .name {
 background-color: white;
