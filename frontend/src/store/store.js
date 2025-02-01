@@ -4,7 +4,10 @@ export default createStore({
     state: () => ({
         patient: null,
         doctor: null,
-        administrator: {},
+        administrator: {
+            Phone: '8 800 535-35-35',
+            Mail: 'nePisat@otveta.net'
+        },
         auth: "auth"
     }),
     getters: {
