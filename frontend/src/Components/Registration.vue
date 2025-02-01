@@ -1,12 +1,12 @@
 <template>
-            <my-header/>
+
             
             <form class="form" @submit.prevent>
                 
                 <div class="main">
                     <div class="headbar">
                         <h2 class="name reg">Регистрация</h2>
-                        <h2 @click="$router.push('/authorization')" class="name auth">Авторизация</h2>
+                        <h2 @click="$store.commit('updateAuth', 'auth')" class="name auth">Авторизация</h2>
                     </div>
                     
                 
