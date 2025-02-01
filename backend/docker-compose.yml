@@ -30,3 +30,9 @@ services:
         - pg
     env_file:
             - .env
+  frontend:
+    image: nginx:latest
+    ports:
+      - "3000:80"
+    volumes:
+      - ../frontend:/usr/share/nginx/html:ro
