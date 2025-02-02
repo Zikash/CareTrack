@@ -10,6 +10,7 @@ class RunConfig(BaseModel):
 class ApiV1Prefix(BaseModel):
     prefix: str = "/v1"
     patient: str = "/patient"
+    doctor: str = "/doctor"
 
 
 class ApiPrefix(BaseModel):

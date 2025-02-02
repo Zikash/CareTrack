@@ -13,7 +13,13 @@ class PatientBase(BaseModel):
     gender_id: int
 
 class PatientCreate(PatientBase):
-    pass
+    name: str
+    surname: str
+    patronymic: Optional[str]
+    phone: str
+    home_address: str
+    age: int
+    gender_id: int
 
 class PatientRead(PatientBase):
     id: int
