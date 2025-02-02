@@ -1,6 +1,8 @@
 <template>
     <div class="doctorBar">
-        <div @click="hello" class="main">
+        <div @click="$emit('SelectDoctor', doctor)" class="main" :class="{
+            'select': selected.true
+        }">
             <h3 class="Fio left">{{ doctor.Fio }}</h3>
             <h3 @click.stop="copyPhone" class="Phone left">{{ doctor.Phone }}</h3>
             <h3 class="Place left">{{ doctor.Place }}</h3>
@@ -15,15 +17,16 @@
     export default {
         name: 'doctor-bar',
         props: {
+            selected: {
+                Type: Boolean,
+                default: false
+            },
             doctor: {
                 Type: Object,
                 required: true
             }
         },
         methods: {
-            hello() {
-                alert(this.doctor.Fio)
-            },
             copyPhone() {
                 navigator.clipboard.writeText(this.doctor.Phone)
                 alert("Скопирован номер " + this.doctor.Phone)
@@ -52,6 +55,11 @@
         }
 
         
+    }
+
+
+    .select {
+    background-color: #02b820;
     }
 
 </style>

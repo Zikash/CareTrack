@@ -30,8 +30,7 @@
                         'thenPage': thenPage === 'osmotrs'
                     }">Осмотры</h2>
                 </div>
-                
-            
+                     
                 <div class="main__view">
 
                     <div class="AdminProfile" v-if="thenPage === 'profile'">
@@ -41,38 +40,52 @@
                         
                         <h3>Номер телефона</h3>
                         <div class="content_profile">
-                            <h3>8 800 535-35-35</h3>
-                            <button>Изменить</button>
+                            <h3>{{ $store.state.administrator.Phone }}</h3>
+                            <button @click="editPhone=true">Изменить</button>
+                            <input v-model="newPhone" v-if="editPhone" placeholder="Введите новый номер..."/>
+                            <button @click="updatePhone" v-if="editPhone">подтвердить</button>
                         </div>
                         <h3>Электронная почта</h3>
                         <div class="content_profile">
-                            <h3>nePisat@otveta.net</h3>
-                            <button>Изменить</button>
+                            <h3>{{ $store.state.administrator.Mail }}</h3>
+                            <button @click="editMail=true">Изменить</button>
+                            <input  v-model="newMail" v-if="editMail" placeholder="Введите новую почту..."/>
+                            <button @click="updateMail" v-if="editMail">подтвердить</button>
                         </div>
                         <div class="exitBox">
                             <button @click="unAuthorizarion" class="exit">Выход</button>
                         </div>
-                    </div>
-                        
-                    <div class="AllDoctors" v-else-if="thenPage === 'doctors'">
+                    </div>                       
+                    <div class="AllDoctors" v-if="thenPage === 'doctors'">
 
                         <named-bar :names="['ФИО', 'Телефон', 'Участок', 'Стаж']"/>
-                        <doctor-bar v-for="doctor in doctors" 
-                        :doctor="doctor"/>
+                        <doctor-bar @SelectDoctor="SelectDoctor"  v-if="doctors.length >= 1" v-for="doctor in doctors" 
+                        :doctor="doctor"
+                        :selected="{
+                            true: info.view && info.object_view === 'doctor' && info.doctor.id === doctor.id
+                        }"/>
+                        <h3 class="empty" v-else>Докторов нет</h3>
 
                     </div>
                     <div class="AllPatients" v-else-if="thenPage === 'patients'">
                         
                         <named-bar :names="['ФИО', 'Телефон', 'Возраст', 'Пол']"/>
-                        <patient-bar v-for="patient in patients" 
-                        :patient="patient"/>
+                        <patient-bar @SelectPatient="SelectPatient" v-if="patients.length >= 1" v-for="patient in patients" 
+                        :patient="patient"
+                        :selected="{
+                            true: info.view && info.object_view === 'patient' && info.patient.id === patient.id
+                        }"/>
+                        <h3 class="empty" v-else>Пациентов нет</h3>
 
                     </div>
                     <div class="AllOsmotrs" v-else-if="thenPage === 'osmotrs'">
                         
                         <osmotr-bar 
+                        v-if="osmotrs.length >= 1"
                         v-for="osmotr in osmotrs" 
-                        :osmotr="osmotr"/>
+                        :osmotr="osmotr"
+                        @SelectOsmotr="SelectOsmotr"/>
+                        <h3 class="empty" v-else>Осмотров нет</h3>
 
                     </div>
                     
@@ -82,9 +95,10 @@
             
         </form>
 
-        <form class="info" @submit.prevent>
+        <form class="info" @submit.prevent v-if="info.view">
             
-            <patient-info/>
+            <patient-info :info="info" v-if="info.object_view === 'patient'"/>
+            <doctor-info :info="info" v-if="info.object_view === 'doctor'"/>
 
         </form>
     </div>
@@ -98,6 +112,12 @@
         data() {
             return {
                 thenPage: "profile",
+                editPhone: false,
+                editMail: false,
+                newPhone: '',
+                newMail: '',
+                limit: 10,
+                page: 1,
                 doctors: [
                     {
                         id: 1,
@@ -170,7 +190,15 @@
                         Date_this: "11.11.11",
                         Time_this: "11:66"
                     }
-                ]
+                ],
+                info: {
+                    view: false,
+                    object_view: 'patient',
+                    patient: {},
+                    doctor: {},
+                    osmotr: {},
+                    osmotrs: []
+                }
                     
             }
         },
@@ -178,6 +206,80 @@
             unAuthorizarion() {
                 this.$router.push('/')
                 this.$store.commit('updateAdministrator', null)
+            },
+            updatePhone() {
+                if (this.newPhone < 9){
+                    alert("Номер слишком короткий")
+                    return
+                }
+
+                if (confirm("Вы уверены что хотите поменять номер " + this.$store.state.administrator.Phone + " на новый " + this.newPhone)) {
+                    this.$store.state.administrator.Phone = this.newPhone
+                }
+
+                this.newPhone = ''
+                this.editPhone = false
+
+            },
+            updateMail() {
+                if (this.newMail.split('@').length < 2){
+                    alert("Не корректная почта")
+                    return
+                }
+
+                if (confirm("Вы уверены что хотите поменять почту " + this.$store.state.administrator.Mail + " на новую " + this.newMail)) {
+                    this.$store.state.administrator.Mail = this.newMail
+                }
+
+                this.newMail = ''
+                this.editMail = false
+            },
+            SelectPatient(patient) {
+                if (patient.id == this.info.patient.id && this.info.view){
+                    this.info.view =false
+                    return
+                }
+
+                this.info.view = true
+                this.info.object_view = 'patient'
+                this.info.patient = patient
+                this.info.osmotrs = []
+                this.osmotrs.forEach(osmotr => {
+                    if (osmotr.patient.id == patient.id){
+                        this.info.osmotrs.push(osmotr)
+                    }
+                })
+                
+            },
+            SelectDoctor(doctor) {
+                if (doctor.id == this.info.doctor.id && this.info.view){
+                    this.info.view =false
+                    return
+                }
+
+                this.info.view = true
+                this.info.object_view = 'doctor'
+                this.info.doctor = doctor
+                this.info.osmotrs = []
+                this.osmotrs.forEach(osmotr => {
+                    if (osmotr.doctor.id == doctor.id){
+                        this.info.osmotrs.push(osmotr)
+                    }
+                })
+                
+            },
+            SelectOsmotr(osmotr) {
+                if (osmotr.id == this.info.osmotr.id && this.info.view){
+                    this.info.view =false
+                    return
+                }
+
+                this.info.view = true
+                this.info.object_view = 'osmotr'
+                this.info.osmotr = osmotr
+                this.info.osmotrs = []
+                
+                
             }
         }
     }
@@ -262,7 +364,7 @@ background-color: white;
 padding: 35px;
 margin-left: auto;
 margin-right: auto;
-border-radius: 0px 10px 10px 10px;
+border-radius: 0px 0px 10px 10px;
 }
 
 .rootBox {
@@ -289,15 +391,31 @@ border-radius: 0px 10px 10px 10px;
 
 .content_profile h3 {
     background-color: #D9D9D9;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.content_profile input {
+    margin-left: 30px;
+    background-color: #D9D9D9;
     padding: 5px;
     border-radius: 5px;
 }
+
 
 .content_profile button {
     background-color: #69C553;
     border-radius: 5px;
     padding: 5px;
     margin-left: 20px;
+    font-size: 15px;
+}
+
+.empty {
+    text-align: center;
+    align-content: center;
+    margin-top: 40px;
+    font-size: 30px;
 }
 
 .exitBox {
@@ -312,5 +430,6 @@ border-radius: 0px 10px 10px 10px;
     margin-left: auto;
     margin-right: 20px;
 }
+
 
 </style>

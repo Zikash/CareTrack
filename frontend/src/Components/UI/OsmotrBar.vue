@@ -1,6 +1,8 @@
 <template>
     <div class="osmotrBar">
-        <div @click="hello" class="main">
+        <div @click="$emit('SelectOsmotr', osmotr)" class="main" :class="{
+            'select': selected.true
+        }">
             <div class="main_content doctor">
                 <h3 class="left">Врач</h3>
                 <h3 class="Fio left">{{ osmotr.doctor.Fio }}</h3>
@@ -35,6 +37,10 @@
 export default {
     name: 'osmotr-bar',
     props: {
+        selected: {
+                Type: Boolean,
+                default: false
+            },
         osmotr: {
             Type: Object,
             required: true
@@ -73,6 +79,10 @@ export default {
 
     .main_content {
         display: flex;
+    }
+
+    .select {
+    background-color: #02b820;
     }
 
 </style>

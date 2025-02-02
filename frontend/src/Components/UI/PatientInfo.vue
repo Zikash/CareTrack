@@ -20,13 +20,40 @@
                 <div class="main__view">
 
                     <div class="patient_profile" v-if="infoPage === 'patient'">
+                        <div class="rootBox">
+                            <h2 class="root">Информация о пациенте</h2>
+                        </div>
+                        
+                        <h3>ФИО</h3>
+                        <div class="content_profile">
+                            <h3>{{ info.patient.Fio }}</h3>
+                        </div>
+                        <h3>Телефон</h3>
+                        <div class="content_profile">
+                            <h3>{{info.patient.Phone}}</h3>
+                        </div>
+                        <h3>Адрес</h3>
+                        <div class="content_profile">
+                            <h3>{{info.patient.Address}}</h3>
+                        </div>
+                        <h3>Возраст</h3>
+                        <div class="content_profile">
+                            <h3>{{info.patient.Age}}</h3>
+                        </div>
+                        <h3>Пол</h3>
+                        <div class="content_profile">
+                            <h3>{{info.patient.Gender}}</h3>
+                        </div>
 
                     </div>
                         
                     <div class="patient_osmotrs" v-else-if="infoPage === 'osmotrs'">
                         <osmotr-bar 
-                        v-for="osmotr in osmotrs" 
+                        v-for="osmotr in info.osmotrs" 
+                        v-if="info.osmotrs.length >= 1"
                         :osmotr="osmotr"/>
+                        <h2 v-else>Осмотров нет</h2>
+
                     </div>
                     <div class="patient_osmotr" v-else-if="infoPage === 'osmotr'">
 
@@ -44,49 +71,15 @@
 
     export default {
         name: 'patient-info',
+        props: {
+            info: {
+                Type: Object,
+                required: true
+            }
+        },
         data() {
             return {
                 infoPage: 'patient',
-                osmotrs: [
-                    {
-                        id: 1,
-                        doctor: {
-                            id: 1,
-                            Fio: "Nikolay Pobelov Homonaft",
-                            Phone: "8 999 999 99-99",
-                            Place: 1,
-                            Stage: 1
-                        },
-                        patient: {
-                            id: 1,
-                            Fio: "Haruton ebrog Afomon",
-                            Phone: "8 888 099 73-89",
-                            Address: "moletare 17"
-                        },
-                        place: "Hospital",
-                        Date_this: "11.11.11",
-                        Time_this: "11:11"
-                    },
-                    {
-                        id: 2,
-                        doctor: {
-                            id: 2,
-                            Fio: "Nikolay Pobelov Homonaft",
-                            Phone: "8 999 988 99-99",
-                            Place: 2,
-                            Stage: 4
-                        },
-                        patient: {
-                            id: 2,
-                            Fio: "Haruton ebrog Afomon",
-                            Phone: "8 888 099 73-89",
-                            Address: "hoolersire h. 57"
-                        },
-                        place: "Home",
-                        Date_this: "11.11.11",
-                        Time_this: "11:66"
-                    }
-                ]
             }
         }
     }
