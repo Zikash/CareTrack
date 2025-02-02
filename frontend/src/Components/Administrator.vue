@@ -100,6 +100,10 @@
 
         <form class="info" @submit.prevent v-if="info.view">
             
+            <div class="closeBox">
+                <Button @="closeView" class="close">X</Button>
+            </div>
+
             <patient-info :info="info" v-if="info.object_view === 'patient'"/>
             <doctor-info :info="info" v-if="info.object_view === 'doctor'"/>
             <osmotr-info :info="info" v-if="info.object_view === 'osmotr'"/>
@@ -301,6 +305,9 @@
                 this.info.osmotrs = []
                 
                 
+            },
+            closeView() {
+                this.info.view = false
             }
         }
     }
@@ -321,9 +328,8 @@ background-color: #F0EEEE;
 
 
 form {
-display: flex;
-margin-left: auto;
-margin-right: auto;
+/*display: flex;*/
+margin: auto;
 }
 
 .main_div {
@@ -452,5 +458,20 @@ border-radius: 0px 0px 10px 10px;
     margin-right: 20px;
 }
 
+
+.closeBox {
+    padding-top: 40px;
+    display: flex;
+}
+
+.close {
+    height: 50px;
+    width: 50px;
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: red;
+    border-radius: 100%;
+}
 
 </style>

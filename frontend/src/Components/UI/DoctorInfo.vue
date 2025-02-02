@@ -45,6 +45,7 @@
                 
             <div class="doctor_osmotrs" v-else-if="infoPage === 'osmotrs'">
                 <osmotr-bar 
+                @SelectOsmotr="SelectOsmotr"
                 v-for="osmotr in info.osmotrs" 
                 v-if="info.osmotrs.length >= 1"
                 :osmotr="osmotr"/>
@@ -52,6 +53,43 @@
 
             </div>
             <div class="doctor_osmotr" v-else-if="infoPage === 'osmotr'">
+
+                <div class="boxBack"> 
+                    <button @click="backOsmotr" class="back"><</button>
+                </div>
+                <div class="rootBox">
+                    <h2 class="root">Информация о осмотре</h2>
+                </div>
+                        
+                <h3>Место осмотра</h3>
+                <div class="content_profile">
+                    <h3 v-if="info.osmotr.place === 'Hospital'">Больница</h3>
+                    <h3 v-else>{{ info.osmotr.patient.Address }}</h3>
+                </div>
+                <h3>Дата осмотра</h3>
+                <div class="content_profile">
+                    <h3>{{info.osmotr.Date_this}}</h3>
+                </div>
+                <h3>Врач</h3>
+                <div class="content_profile">
+                    <h3>{{info.osmotr.doctor.Fio}}</h3>
+                </div>
+                <h3>Пациент</h3>
+                <div class="content_profile">
+                    <h3>{{info.osmotr.patient.Fio}}</h3>
+                </div>
+                <h3>Симптомы</h3>
+                <div class="content_profile">
+                    <h3 v-for="simptome in info.osmotr.Simptomes">{{simptome}}</h3>
+                </div>
+                <h3>Диагноз</h3>
+                <div class="content_profile">
+                    <h3>{{info.osmotr.Result}}</h3>
+                </div>
+                <h3>Предписания</h3>
+                <div class="content_profile">
+                    <h3>{{info.osmotr.Predpis}}</h3>
+                </div>
 
             </div>
 
@@ -77,7 +115,19 @@ data() {
     return {
         infoPage: 'doctor',
     }
-}
+},
+        methods: {
+            SelectOsmotr(osmotr){
+
+                this.infoPage = 'osmotr'
+                this.info.osmotr = osmotr
+
+            },
+            backOsmotr() {
+                this.infoPage = 'osmotrs'
+                this.info.osmotr = {}
+            }
+        }
 }
 </script>
 
@@ -208,5 +258,16 @@ margin-left: auto;
 margin-right: 20px;
 }
 
+.boxBack {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.back {
+    height: 40px;
+    width: 60px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 </style>
