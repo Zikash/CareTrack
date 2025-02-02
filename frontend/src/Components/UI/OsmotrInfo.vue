@@ -2,35 +2,97 @@
     <div class="main">
         <div class="headbar">
             <h2 
-            @click="infoPage = 'patient'" 
+            @click="infoPage = 'osmotr'" 
             class="name profile" 
             :class="{
-                thenPage: infoPage === 'patient'
-            }">Пациент</h2>
+                thenPage: infoPage === 'osmotr'
+            }">Осмотр</h2>
 
             <h2
-            @click="infoPage = 'osmotrs'" 
+            @click="infoPage = 'doctor'" 
+            class="name doctors" 
+            :class="{
+                'thenPage': infoPage === 'doctor'
+            }">Врач</h2>
+
+<h2
+            @click="infoPage = 'patient'" 
             class="name osmotrs" 
             :class="{
-                'thenPage': infoPage === 'osmotrs' || infoPage === 'osmotr'
-            }">Осмотры</h2>
+                'thenPage': infoPage === 'patient'
+            }">Пациент</h2>
+
         </div>
         
     
         <div class="main__view">
 
-            <div class="patient_profile" v-if="infoPage === 'patient'">
+            <div class="osmotr" v-if="infoPage === 'osmotr'">
                 <div class="rootBox">
-                    <h2 class="root">Информация о пациенте</h2>
+                    <h2 class="root">Информация о осмотре</h2>
                 </div>
                 
+                <h3>Место осмотра</h3>
+                <div class="content_profile">
+                    <h3 v-if="info.osmotr.place === 'Hospital'">Больница</h3>
+                    <h3 v-else>{{ info.patient.Address }}</h3>
+                </div>
+                <h3>Дата осмотра</h3>
+                <div class="content_profile">
+                    <h3>{{info.osmotr.Date_this}}</h3>
+                </div>
+                <h3>Врач</h3>
+                <div class="content_profile">
+                    <h3>{{info.doctor.Fio}}</h3>
+                </div>
+                <h3>Пациент</h3>
+                <div class="content_profile">
+                    <h3>{{info.patient.Fio}}</h3>
+                </div>
+                <h3>Симптомы</h3>
+                <div class="content_profile">
+                    <h3 v-for="simptome in info.osmotr.Simptomes">{{simptome}}</h3>
+                </div>
+                <h3>Диагноз</h3>
+                <div class="content_profile">
+                    <h3>{{info.osmotr.Result}}</h3>
+                </div>
+                <h3>Предписания</h3>
+                <div class="content_profile">
+                    <h3>{{info.osmotr.Predpis}}</h3>
+                </div>
+
+            </div>
+                
+            <div class="doctor" v-else-if="infoPage === 'doctor'">
+
+                <h3>ФИО</h3>
+                <div class="content_profile">
+                    <h3>{{ info.doctor.Fio }}</h3>
+                </div>
+                <h3>Телефон</h3>
+                <div class="content_profile">
+                    <h3>{{info.doctor.Phone}}</h3>
+                </div>
+                <h3>Участок</h3>
+                <div class="content_profile">
+                    <h3>{{info.doctor.Place}}</h3>
+                </div>
+                <h3>Стаж</h3>
+                <div class="content_profile">
+                    <h3>{{info.doctor.Stage}}</h3>
+                </div>
+
+            </div>
+            <div class="patient" v-else-if="infoPage === 'patient'">
+
                 <h3>ФИО</h3>
                 <div class="content_profile">
                     <h3>{{ info.patient.Fio }}</h3>
                 </div>
                 <h3>Телефон</h3>
                 <div class="content_profile">
-                    <h3>{{info.patient.Phone}}</h3>
+                     <h3>{{info.patient.Phone}}</h3>
                 </div>
                 <h3>Адрес</h3>
                 <div class="content_profile">
@@ -44,18 +106,6 @@
                 <div class="content_profile">
                     <h3>{{info.patient.Gender}}</h3>
                 </div>
-
-            </div>
-                
-            <div class="patient_osmotrs" v-else-if="infoPage === 'osmotrs'">
-                <osmotr-bar 
-                v-for="osmotr in info.osmotrs" 
-                v-if="info.osmotrs.length >= 1"
-                :osmotr="osmotr"/>
-                <h2 v-else>Осмотров нет</h2>
-
-            </div>
-            <div class="patient_osmotr" v-else-if="infoPage === 'osmotr'">
 
             </div>
 

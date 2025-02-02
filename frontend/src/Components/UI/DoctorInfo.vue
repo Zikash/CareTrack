@@ -21,7 +21,7 @@
 
             <div class="patient_profile" v-if="infoPage === 'doctor'">
                 <div class="rootBox">
-                    <h2 class="root">Информация о пациенте</h2>
+                    <h2 class="root">Информация о враче</h2>
                 </div>
                 
                 <h3>ФИО</h3>
@@ -32,17 +32,13 @@
                 <div class="content_profile">
                     <h3>{{info.doctor.Phone}}</h3>
                 </div>
-                <h3>Адрес</h3>
+                <h3>Участок</h3>
                 <div class="content_profile">
-                    <h3>{{info.doctor.Address}}</h3>
+                    <h3>{{info.doctor.Place}}</h3>
                 </div>
-                <h3>Возраст</h3>
+                <h3>Стаж</h3>
                 <div class="content_profile">
-                    <h3>{{info.doctor.Age}}</h3>
-                </div>
-                <h3>Пол</h3>
-                <div class="content_profile">
-                    <h3>{{info.doctor.Gender}}</h3>
+                    <h3>{{info.doctor.Stage}}</h3>
                 </div>
 
             </div>
@@ -79,7 +75,7 @@ props: {
 },
 data() {
     return {
-        infoPage: 'patient',
+        infoPage: 'doctor',
     }
 }
 }

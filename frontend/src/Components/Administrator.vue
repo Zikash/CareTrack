@@ -84,7 +84,10 @@
                         v-if="osmotrs.length >= 1"
                         v-for="osmotr in osmotrs" 
                         :osmotr="osmotr"
-                        @SelectOsmotr="SelectOsmotr"/>
+                        @SelectOsmotr="SelectOsmotr"
+                        :selected="{
+                            true: info.view && info.object_view === 'osmotr' && info.osmotr.id === osmotr.id
+                        }"/>
                         <h3 class="empty" v-else>Осмотров нет</h3>
 
                     </div>
@@ -99,6 +102,7 @@
             
             <patient-info :info="info" v-if="info.object_view === 'patient'"/>
             <doctor-info :info="info" v-if="info.object_view === 'doctor'"/>
+            <osmotr-info :info="info" v-if="info.object_view === 'osmotr'"/>
 
         </form>
     </div>
@@ -139,6 +143,7 @@
                         id: 1,
                         Fio: "Haruton ebrog Afomon",
                         Phone: "8 888 099 73-89",
+                        Address: "UUlice 88",
                         Gender: "М",
                         Age: 6
                     },
@@ -146,6 +151,7 @@
                         id: 2,
                         Fio: "Haruton ebrog Afomon",
                         Phone: "8 888 099 73-89",
+                        Address: "hoolersire h. 57",
                         Gender: "М",
                         Age: 38
                     }
@@ -277,6 +283,21 @@
                 this.info.view = true
                 this.info.object_view = 'osmotr'
                 this.info.osmotr = osmotr
+                
+                this.doctors.forEach(doctor => {
+                    if (doctor.id == osmotr.doctor.id){
+                        this.info.doctor = doctor
+                        return
+                    }
+                })
+
+                this.patients.forEach(patient => {
+                    if (patient.id == osmotr.patient.id) {
+                        this.info.patient = patient
+                        return
+                    }
+                })
+
                 this.info.osmotrs = []
                 
                 

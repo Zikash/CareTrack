@@ -5,6 +5,8 @@ import OsmotrBar from "@/Components/UI/OsmotrBar.vue";
 import PatientBar from "@/Components/UI/PatientBar.vue";
 import NamedBar from "@/Components/UI/NamedBar.vue";
 import PatientInfo from "@/Components/UI/PatientInfo.vue";
+import DoctorInfo from "@/Components/UI/DoctorInfo.vue";
+import OsmotrInfo from "@/Components/UI/OsmotrInfo.vue";
 
 
 
@@ -15,5 +17,7 @@ export default [
     OsmotrBar,
     PatientBar,
     NamedBar,
-    PatientInfo
+    PatientInfo,
+    DoctorInfo,
+    OsmotrInfo
 ]
