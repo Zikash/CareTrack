@@ -2,7 +2,13 @@ import { createStore } from "vuex";
 
 export default createStore({
     state: () => ({
-        patient: null,
+        patient: {
+            Fio: "Haruton ebrog Afomon",
+            Phone: "8 888 099 73-89",
+            Gender: "М",
+            Mail: 'nePisat@otveta.net',
+            Age: 6
+        },
         doctor: null,
         administrator: {
             Phone: '8 800 535-35-35',
