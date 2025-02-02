@@ -1,6 +1,6 @@
 <template>
     
-    <div class="main">
+    <div class="main_div">
         <form class="form" @submit.prevent>
         
             <div class="main">
@@ -54,21 +54,21 @@
                         </div>
                     </div>
                         
-                    <div class="AllDoctors" v-if="thenPage === 'doctors'">
+                    <div class="AllDoctors" v-else-if="thenPage === 'doctors'">
 
                         <named-bar :names="['ФИО', 'Телефон', 'Участок', 'Стаж']"/>
                         <doctor-bar v-for="doctor in doctors" 
                         :doctor="doctor"/>
 
                     </div>
-                    <div class="AllPatients" v-if="thenPage === 'patients'">
+                    <div class="AllPatients" v-else-if="thenPage === 'patients'">
                         
                         <named-bar :names="['ФИО', 'Телефон', 'Возраст', 'Пол']"/>
                         <patient-bar v-for="patient in patients" 
                         :patient="patient"/>
 
                     </div>
-                    <div class="AllOsmotrs" v-if="thenPage === 'osmotrs'">
+                    <div class="AllOsmotrs" v-else-if="thenPage === 'osmotrs'">
                         
                         <osmotr-bar 
                         v-for="osmotr in osmotrs" 
@@ -80,6 +80,12 @@
             </div>
             
             
+        </form>
+
+        <form class="info" @submit.prevent>
+            
+            <patient-info/>
+
         </form>
     </div>
 
@@ -181,6 +187,7 @@
 
 <style scoped>
 
+
 input {
 background-color: #F0EEEE;
 }
@@ -190,8 +197,19 @@ background-color: #F0EEEE;
 }
 
 
-.form {
+form {
 display: flex;
+margin-left: auto;
+margin-right: auto;
+}
+
+.main_div {
+display:flex;
+flex-wrap: wrap;
+margin-top: 20px;
+margin-left: auto;
+margin-right: auto;
+min-width: 500px;
 }
 
 .main {
