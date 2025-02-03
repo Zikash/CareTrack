@@ -5,12 +5,12 @@
         }">
             <div class="main_content doctor">
                 <h3 class="left">Врач</h3>
-                <h3 class="Fio left">{{ osmotr.doctor.Fio }}</h3>
+                <h3 class="Fio left">{{ osmotr.doctor.surname }} {{ osmotr.doctor.name }} {{ osmotr.doctor.patronymic }}</h3>
                 <h3 @click.stop="copyphone(osmotr.doctor)" class="phone">{{ osmotr.doctor.phone }}</h3>
             </div>
             <div class="main_content patient">
                 <h3 class="left">Пациент</h3>
-                <h3 class="Fio left">{{ osmotr.patient.Fio }}</h3>
+                <h3 class="Fio left">{{ osmotr.patient.surname }} {{ osmotr.patient.name }} {{ osmotr.patient.patronymic }}</h3>
                 <h3 @click.stop="copyphone(osmotr.patient)" class="phone">{{ osmotr.patient.phone }}</h3>
             </div>
             <div class="Main_Info">

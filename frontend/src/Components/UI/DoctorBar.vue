@@ -3,7 +3,7 @@
         <div @click="$emit('SelectDoctor', doctor)" class="main" :class="{
             'select': selected.true
         }">
-            <h3 class="Fio left">{{ doctor.Fio }}</h3>
+            <h3 class="Fio left">{{ doctor.surname }} {{ doctor.name }} {{ doctor.patronymic }}</h3>
             <h3 @click.stop="copyphone" class="phone left">{{ doctor.phone }}</h3>
             <h3 class="serviced_area_number left">{{ doctor.serviced_area_number }}</h3>
             <h3 class="experience">{{ doctor.experience }}</h3>

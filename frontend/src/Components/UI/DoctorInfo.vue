@@ -26,7 +26,7 @@
                 
                 <h3>ФИО</h3>
                 <div class="content_profile">
-                    <h3>{{ info.doctor.Fio }}</h3>
+                    <h3>{{ info.doctor.surname }} {{ info.doctor.name }} {{ info.doctor.patronymic }}</h3>
                 </div>
                 <h3>Телефон</h3>
                 <div class="content_profile">
@@ -82,11 +82,11 @@
                 </div>
                 <h3>Врач</h3>
                 <div class="content_profile">
-                    <h3>{{info.osmotr.doctor.Fio}}</h3>
+                    <h3>{{info.osmotr.doctor.Surname}} {{info.osmotr.doctor.name}} {{info.osmotr.doctor.patronymic}}</h3>
                 </div>
                 <h3>Пациент</h3>
                 <div class="content_profile">
-                    <h3>{{info.osmotr.patient.Fio}}</h3>
+                    <h3>{{info.osmotr.patient.Surname}} {{info.osmotr.patient.name}} {{info.osmotr.patient.patronymic}}</h3>
                 </div>
                 <h3>Симптомы</h3>
                 <div class="content_profile">

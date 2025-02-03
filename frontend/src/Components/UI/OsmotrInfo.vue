@@ -43,11 +43,11 @@
                 </div>
                 <h3>Врач</h3>
                 <div class="content_profile">
-                    <h3>{{info.doctor.Fio}}</h3>
+                    <h3>{{ info.doctor.surname }} {{ info.doctor.name }} {{ info.doctor.patronymic }}</h3>
                 </div>
                 <h3>Пациент</h3>
                 <div class="content_profile">
-                    <h3>{{info.patient.Fio}}</h3>
+                    <h3>{{ info.patient.surname }} {{ info.patient.name }} {{ info.patient.patronymic }}</h3>
                 </div>
                 <h3>Симптомы</h3>
                 <div class="content_profile">
@@ -68,7 +68,7 @@
 
                 <h3>ФИО</h3>
                 <div class="content_profile">
-                    <h3>{{ info.doctor.Fio }}</h3>
+                    <h3>{{ info.doctor.surname }} {{ info.doctor.name }} {{ info.doctor.patronymic }}</h3>
                 </div>
                 <h3>Телефон</h3>
                 <div class="content_profile">
@@ -88,7 +88,7 @@
 
                 <h3>ФИО</h3>
                 <div class="content_profile">
-                    <h3>{{ info.patient.Fio }}</h3>
+                    <h3>{{ info.patient.surname }} {{ info.patient.name }} {{ info.patient.patronymic }}</h3>
                 </div>
                 <h3>Телефон</h3>
                 <div class="content_profile">
