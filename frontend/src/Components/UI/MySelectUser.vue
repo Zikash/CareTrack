@@ -2,8 +2,8 @@
     <select :value="modelValue" @change="changeOption">
         <option 
         v-for="user in users"
-        :key="user.id"
-        :value="user.id">
+        :key="Number(user.id)"
+        :value="Number(user.id)">
             {{ user.surname }} {{ user.name }} {{ user.patronymic }}
         </option>
 

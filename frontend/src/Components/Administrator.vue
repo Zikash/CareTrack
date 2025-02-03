@@ -161,7 +161,12 @@
                                 <input v-model="searched.patronymic" class="patronymic_input input" type="text">
                             </li>
                         </ul>
-                        <create-osmotr @createOsmotr="createOsmotr" v-else-if="dialog === 'create'"/>
+                        <create-osmotr
+                        v-model:osmotrs="osmotrs"
+                        :doctors="doctors"
+                        :patients="patients"
+                        v-model:view="show"
+                        v-else-if="dialog === 'create'"/>
                     </my-dialog>
 
                     
@@ -254,7 +259,6 @@ import data from "@/Mixins/Data";
         },
         methods: {
             createOsmotr(osmotr){
-
                 this.osmotrs.push(osmotr)
             },
             searchedClient(mass){
