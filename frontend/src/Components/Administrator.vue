@@ -40,16 +40,16 @@
                         
                         <h3>Номер телефона</h3>
                         <div class="content_profile">
-                            <h3>{{ $store.state.administrator.Phone }}</h3>
-                            <button @click="editPhone=true">Изменить</button>
-                            <input v-model="newPhone" v-if="editPhone" placeholder="Введите новый номер..."/>
-                            <button @click="updatePhone" v-if="editPhone">подтвердить</button>
+                            <h3>{{ $store.state.administrator.phone }}</h3>
+                            <button @click="editphone=true">Изменить</button>
+                            <input v-model="newphone" v-if="editphone" serviced_area_numberholder="Введите новый номер..."/>
+                            <button @click="updatephone" v-if="editphone">подтвердить</button>
                         </div>
                         <h3>Электронная почта</h3>
                         <div class="content_profile">
                             <h3>{{ $store.state.administrator.Mail }}</h3>
                             <button @click="editMail=true">Изменить</button>
-                            <input  v-model="newMail" v-if="editMail" placeholder="Введите новую почту..."/>
+                            <input  v-model="newMail" v-if="editMail" serviced_area_numberholder="Введите новую почту..."/>
                             <button @click="updateMail" v-if="editMail">подтвердить</button>
                         </div>
                         <div class="exitBox">
@@ -58,37 +58,93 @@
                     </div>                       
                     <div class="AllDoctors" v-if="thenPage === 'doctors'">
 
+
+                        <div class="menu">
+
+                            <add-btn class="add_btn"/>
+                            <search-btn class="search_btn"/>
+                                                        
+                        </div>
+
                         <named-bar :names="['ФИО', 'Телефон', 'Участок', 'Стаж']"/>
-                        <doctor-bar @SelectDoctor="SelectDoctor"  v-if="doctors.length >= 1" v-for="doctor in doctors" 
+                        <doctor-bar @SelectDoctor="SelectDoctor"  v-if="doctors.length >= 1" v-for="doctor in doctors.slice(page*limit-limit, page*limit)" 
                         :doctor="doctor"
                         :selected="{
                             true: info.view && info.object_view === 'doctor' && info.doctor.id === doctor.id
                         }"/>
-                        <h3 class="empty" v-else>Докторов нет</h3>
+                        <h3 class="empty" v-else>Врачей нет</h3>
+
+                        <div class="page_wrapper">
+                            <h3 v-for="Npage in totalPages"
+                            class="page_number"
+                            :key="Npage"
+                            :class="{
+                                'this_page': page === Npage
+                            }"
+                            @click="page = Npage">{{ Npage }}</h3>
+                        </div>
 
                     </div>
                     <div class="AllPatients" v-else-if="thenPage === 'patients'">
                         
+
+                        <div class="menu">
+
+                            <add-btn class="add_btn"/>
+                            <search-btn class="search_btn"/>
+                                                        
+                        </div>
+
+
                         <named-bar :names="['ФИО', 'Телефон', 'Возраст', 'Пол']"/>
-                        <patient-bar @SelectPatient="SelectPatient" v-if="patients.length >= 1" v-for="patient in patients" 
+                        <patient-bar @SelectPatient="SelectPatient" v-if="patients.length >= 1" v-for="patient in patients.slice(page*limit-limit, page*limit)" 
                         :patient="patient"
                         :selected="{
                             true: info.view && info.object_view === 'patient' && info.patient.id === patient.id
                         }"/>
                         <h3 class="empty" v-else>Пациентов нет</h3>
 
+                        <div class="page_wrapper">
+                            <h3 v-for="Npage in totalPages"
+                            class="page_number"
+                            :key="Npage"
+                            :class="{
+                                'this_page': page === Npage
+                            }"
+                            @click="page = Npage">{{ Npage }}</h3>
+                        </div>
+
                     </div>
                     <div class="AllOsmotrs" v-else-if="thenPage === 'osmotrs'">
                         
+
+                        <div class="menu">
+
+                            <add-btn class="add_btn"/>
+                            <search-btn class="search_btn"/>
+                                                        
+                        </div>
+
+
                         <osmotr-bar 
                         v-if="osmotrs.length >= 1"
-                        v-for="osmotr in osmotrs" 
+                        v-for="osmotr in osmotrs.slice(page*limit-limit, page*limit)" 
                         :osmotr="osmotr"
                         @SelectOsmotr="SelectOsmotr"
                         :selected="{
                             true: info.view && info.object_view === 'osmotr' && info.osmotr.id === osmotr.id
                         }"/>
                         <h3 class="empty" v-else>Осмотров нет</h3>
+
+                        <div class="page_wrapper">
+                            <h3 v-for="Npage in totalPages"
+                            class="page_number"
+                            :key="Npage"
+                            :class="{
+                                'this_page': page === Npage
+                            }"
+                            @click="page = Npage">{{ Npage }}</h3>
+                        </div>
 
                     </div>
                     
@@ -101,7 +157,7 @@
         <form class="info" @submit.prevent v-if="info.view">
             
             <div class="closeBox">
-                <Button @="closeView" class="close">X</Button>
+                <Button @click="info.view = false" class="close">X</Button>
             </div>
 
             <patient-info :info="info" v-if="info.object_view === 'patient'"/>
@@ -115,92 +171,23 @@
 
 
 <script>
+import data from "@/Mixins/Data";
+
 
     export default {
+        mixins: [
+            data
+        ],
         data() {
             return {
                 thenPage: "profile",
-                editPhone: false,
+                editphone: false,
                 editMail: false,
-                newPhone: '',
+                newphone: '',
                 newMail: '',
                 limit: 10,
                 page: 1,
-                doctors: [
-                    {
-                        id: 1,
-                        Fio: "Nikolay Pobelov Homonaft",
-                        Phone: "8 999 999 99-99",
-                        Place: 1,
-                        Stage: 1
-                    },
-                    {
-                        id: 2,
-                        Fio: "Nikolay Pobelov Homonaft",
-                        Phone: "8 999 988 99-99",
-                        Place: 2,
-                        Stage: 4
-                    }
-                ],
-                patients: [
-                    {
-                        id: 1,
-                        Fio: "Haruton ebrog Afomon",
-                        Phone: "8 888 099 73-89",
-                        Address: "UUlice 88",
-                        Gender: "М",
-                        Age: 6
-                    },
-                    {
-                        id: 2,
-                        Fio: "Haruton ebrog Afomon",
-                        Phone: "8 888 099 73-89",
-                        Address: "hoolersire h. 57",
-                        Gender: "М",
-                        Age: 38
-                    }
-
-                ],
-                osmotrs: [
-                    {
-                        id: 1,
-                        doctor: {
-                            id: 1,
-                            Fio: "Nikolay Pobelov Homonaft",
-                            Phone: "8 999 999 99-99",
-                            Place: 1,
-                            Stage: 1
-                        },
-                        patient: {
-                            id: 1,
-                            Fio: "Haruton ebrog Afomon",
-                            Phone: "8 888 099 73-89",
-                            Address: "moletare 17"
-                        },
-                        place: "Hospital",
-                        Date_this: "11.11.11",
-                        Time_this: "11:11"
-                    },
-                    {
-                        id: 2,
-                        doctor: {
-                            id: 2,
-                            Fio: "Nikolay Pobelov Homonaft",
-                            Phone: "8 999 988 99-99",
-                            Place: 2,
-                            Stage: 4
-                        },
-                        patient: {
-                            id: 2,
-                            Fio: "Haruton ebrog Afomon",
-                            Phone: "8 888 099 73-89",
-                            Address: "hoolersire h. 57"
-                        },
-                        place: "Home",
-                        Date_this: "11.11.11",
-                        Time_this: "11:66"
-                    }
-                ],
+                totalPages: 0,
                 info: {
                     view: false,
                     object_view: 'patient',
@@ -212,23 +199,43 @@
                     
             }
         },
+        watch: {
+            thenPage() {
+                this.page = 1
+                switch (this.thenPage){
+                    case "profile":
+                        return
+                        break;
+                    case "doctors":
+                        this.totalPages = Math.ceil(this.doctors.length / this.limit)
+                        break;
+                    case "patients":
+                        this.totalPages = Math.ceil(this.patients.length / this.limit)
+                        break;
+                    case "osmotrs":
+                        this.totalPages = Math.ceil(this.osmotrs.length / this.limit)
+                        break;
+
+                }
+            }
+        },
         methods: {
             unAuthorizarion() {
                 this.$router.push('/')
                 this.$store.commit('updateAdministrator', null)
             },
-            updatePhone() {
-                if (this.newPhone < 9){
+            updatephone() {
+                if (this.newphone < 9){
                     alert("Номер слишком короткий")
                     return
                 }
 
-                if (confirm("Вы уверены что хотите поменять номер " + this.$store.state.administrator.Phone + " на новый " + this.newPhone)) {
-                    this.$store.state.administrator.Phone = this.newPhone
+                if (confirm("Вы уверены что хотите поменять номер " + this.$store.state.administrator.phone + " на новый " + this.newphone)) {
+                    this.$store.state.administrator.phone = this.newphone
                 }
 
-                this.newPhone = ''
-                this.editPhone = false
+                this.newphone = ''
+                this.editphone = false
 
             },
             updateMail() {
@@ -305,9 +312,6 @@
                 this.info.osmotrs = []
                 
                 
-            },
-            closeView() {
-                this.info.view = false
             }
         }
     }
@@ -472,6 +476,38 @@ border-radius: 0px 0px 10px 10px;
     margin-right: auto;
     background-color: red;
     border-radius: 100%;
+}
+
+.page_wrapper {
+    margin-left:auto;
+    display: flex;
+    padding: 5px;
+}
+
+.page_number {
+    margin-left: 10px;
+    border: 2px black;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #69C553;
+}
+
+.this_page {
+    background-color: green;
+}
+
+.menu {
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.menu .search_btn{
+    margin-left: 10px;
+    margin-right: auto;
+}
+
+.menu .add_btn {
+    margin-left: auto;
 }
 
 </style>

@@ -6,18 +6,18 @@
             <div class="main_content doctor">
                 <h3 class="left">Врач</h3>
                 <h3 class="Fio left">{{ osmotr.doctor.Fio }}</h3>
-                <h3 @click.stop="copyPhone(osmotr.doctor)" class="Phone">{{ osmotr.doctor.Phone }}</h3>
+                <h3 @click.stop="copyphone(osmotr.doctor)" class="phone">{{ osmotr.doctor.phone }}</h3>
             </div>
             <div class="main_content patient">
                 <h3 class="left">Пациент</h3>
                 <h3 class="Fio left">{{ osmotr.patient.Fio }}</h3>
-                <h3 @click.stop="copyPhone(osmotr.patient)" class="Phone">{{ osmotr.patient.Phone }}</h3>
+                <h3 @click.stop="copyphone(osmotr.patient)" class="phone">{{ osmotr.patient.phone }}</h3>
             </div>
             <div class="Main_Info">
                 <div class="main_content">
                     <h3>Место осмотра</h3>
-                    <h3 v-if="osmotr.place === 'Hospital'">Больница</h3>
-                    <h3 v-else>{{ osmotr.patient.Address }}</h3>
+                    <h3 v-if="osmotr.serviced_area_number === 'Hospital'">Больница</h3>
+                    <h3 v-else>{{ osmotr.patient.home_address }}</h3>
                 </div>
                 <div class="main_content">
                     <h3>Дата</h3>
@@ -47,9 +47,9 @@ export default {
         }
     },
     methods: {
-        copyPhone(object) {
-                navigator.clipboard.writeText(object.Phone)
-                alert("Скопирован номер " + object.Phone)
+        copyphone(object) {
+                navigator.clipboard.writeText(object.phone)
+                alert("Скопирован номер " + object.phone)
             }
     }
 }

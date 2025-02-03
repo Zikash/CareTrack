@@ -30,15 +30,15 @@
                 </div>
                 <h3>Телефон</h3>
                 <div class="content_profile">
-                    <h3>{{info.doctor.Phone}}</h3>
+                    <h3>{{info.doctor.phone}}</h3>
                 </div>
                 <h3>Участок</h3>
                 <div class="content_profile">
-                    <h3>{{info.doctor.Place}}</h3>
+                    <h3>{{info.doctor.serviced_area_number}}</h3>
                 </div>
                 <h3>Стаж</h3>
                 <div class="content_profile">
-                    <h3>{{info.doctor.Stage}}</h3>
+                    <h3>{{info.doctor.experience}}</h3>
                 </div>
 
             </div>
@@ -50,6 +50,16 @@
                 v-if="info.osmotrs.length >= 1"
                 :osmotr="osmotr"/>
                 <h2 v-else>Осмотров нет</h2>
+
+                <div class="page_wrapper">
+                            <h3 v-for="Npage in totalPages"
+                            class="page_number"
+                            :key="Npage"
+                            :class="{
+                                'this_page': page === Npage
+                            }"
+                            @click="page = Npage">{{ Npage }}</h3>
+                </div>
 
             </div>
             <div class="doctor_osmotr" v-else-if="infoPage === 'osmotr'">
@@ -63,8 +73,8 @@
                         
                 <h3>Место осмотра</h3>
                 <div class="content_profile">
-                    <h3 v-if="info.osmotr.place === 'Hospital'">Больница</h3>
-                    <h3 v-else>{{ info.osmotr.patient.Address }}</h3>
+                    <h3 v-if="info.osmotr.serviced_area_number === 'Hospital'">Больница</h3>
+                    <h3 v-else>{{ info.osmotr.patient.home_address }}</h3>
                 </div>
                 <h3>Дата осмотра</h3>
                 <div class="content_profile">
@@ -80,7 +90,8 @@
                 </div>
                 <h3>Симптомы</h3>
                 <div class="content_profile">
-                    <h3 v-for="simptome in info.osmotr.Simptomes">{{simptome}}</h3>
+                    <h3 v-for="simptome in info.osmotr.Simptomes"
+                    class="simptom">{{simptome}}</h3>
                 </div>
                 <h3>Диагноз</h3>
                 <div class="content_profile">
@@ -114,8 +125,17 @@ props: {
 data() {
     return {
         infoPage: 'doctor',
+        limit: 10,
+        page: 1,
+        totalPages: 0
     }
 },
+        watch: {
+            infoPage() {
+                this.page = 1
+                this.totalPages = Math.ceil(this.info.osmotrs.length / this.limit)
+            }
+        },
         methods: {
             SelectOsmotr(osmotr){
 
@@ -268,6 +288,28 @@ margin-right: 20px;
     width: 60px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.simptom {
+    margin-left: 5px;
+}
+
+.page_wrapper {
+    margin-left:auto;
+    display: flex;
+    padding: 5px;
+}
+
+.page_number {
+    margin-left: 10px;
+    border: 2px black;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #69C553;
+}
+
+.this_page {
+    background-color: green;
 }
 
 </style>

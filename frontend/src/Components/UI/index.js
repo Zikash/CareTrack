@@ -7,6 +7,8 @@ import NamedBar from "@/Components/UI/NamedBar.vue";
 import PatientInfo from "@/Components/UI/PatientInfo.vue";
 import DoctorInfo from "@/Components/UI/DoctorInfo.vue";
 import OsmotrInfo from "@/Components/UI/OsmotrInfo.vue";
+import AddButton from "@/Components/UI/AddButton.vue";
+import SearchButton from "@/Components/UI/SearchButton.vue";
 
 
 
@@ -19,5 +21,7 @@ export default [
     NamedBar,
     PatientInfo,
     DoctorInfo,
-    OsmotrInfo
+    OsmotrInfo,
+    AddButton,
+    SearchButton
 ]

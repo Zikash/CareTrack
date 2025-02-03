@@ -34,8 +34,8 @@
                 
                 <h3>Место осмотра</h3>
                 <div class="content_profile">
-                    <h3 v-if="info.osmotr.place === 'Hospital'">Больница</h3>
-                    <h3 v-else>{{ info.patient.Address }}</h3>
+                    <h3 v-if="info.osmotr.serviced_area_number === 'Hospital'">Больница</h3>
+                    <h3 v-else>{{ info.patient.home_address }}</h3>
                 </div>
                 <h3>Дата осмотра</h3>
                 <div class="content_profile">
@@ -51,7 +51,7 @@
                 </div>
                 <h3>Симптомы</h3>
                 <div class="content_profile">
-                    <h3 v-for="simptome in info.osmotr.Simptomes">{{simptome}}</h3>
+                    <h3 v-for="simptome in info.osmotr.Simptomes" class="simptom">{{simptome}}</h3>
                 </div>
                 <h3>Диагноз</h3>
                 <div class="content_profile">
@@ -72,15 +72,15 @@
                 </div>
                 <h3>Телефон</h3>
                 <div class="content_profile">
-                    <h3>{{info.doctor.Phone}}</h3>
+                    <h3>{{info.doctor.phone}}</h3>
                 </div>
                 <h3>Участок</h3>
                 <div class="content_profile">
-                    <h3>{{info.doctor.Place}}</h3>
+                    <h3>{{info.doctor.serviced_area_number}}</h3>
                 </div>
                 <h3>Стаж</h3>
                 <div class="content_profile">
-                    <h3>{{info.doctor.Stage}}</h3>
+                    <h3>{{info.doctor.experience}}</h3>
                 </div>
 
             </div>
@@ -92,11 +92,11 @@
                 </div>
                 <h3>Телефон</h3>
                 <div class="content_profile">
-                     <h3>{{info.patient.Phone}}</h3>
+                     <h3>{{info.patient.phone}}</h3>
                 </div>
                 <h3>Адрес</h3>
                 <div class="content_profile">
-                    <h3>{{info.patient.Address}}</h3>
+                    <h3>{{info.patient.home_address}}</h3>
                 </div>
                 <h3>Возраст</h3>
                 <div class="content_profile">
@@ -262,5 +262,8 @@ margin-left: auto;
 margin-right: 20px;
 }
 
+.simptom {
+    margin-left: 5px;
+}
 
 </style>

@@ -4,9 +4,9 @@
             'select': selected.true
         }">
             <h3 class="Fio left">{{ patient.Fio }}</h3>
-            <h3 @click.stop="copyPhone" class="Phone left">{{ patient.Phone }}</h3>
-            <h3 class="Place left">{{ patient.Age }}</h3>
-            <h3 class="Stage">{{ patient.Gender }}</h3>
+            <h3 @click.stop="copyphone" class="phone left">{{ patient.phone }}</h3>
+            <h3 class="serviced_area_number left">{{ patient.Age }}</h3>
+            <h3 class="experience">{{ patient.Gender }}</h3>
         </div>
     </div>
 </template>
@@ -27,9 +27,9 @@
             }
         },
         methods: {
-            copyPhone() {
-                navigator.clipboard.writeText(this.patient.Phone)
-                alert("Скопирован номер " + this.patient.Phone)
+            copyphone() {
+                navigator.clipboard.writeText(this.patient.phone)
+                alert("Скопирован номер " + this.patient.phone)
             }
         }
     }

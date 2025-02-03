@@ -46,7 +46,6 @@
 <script>
 import { initCustomFormatter } from 'vue';
 
-
 export default {
 data() {
     return {
@@ -61,9 +60,19 @@ methods: {
         
 
         //Сюда свойство авторизации
+        
+        if (this.login == 'admin' && this.password == '0000'){
+            this.$store.commit("updateAdministrator", {
+                phone: '888888888',
+                Mail: "dddd@sss"
+            })
+        }
+
 
         alert("Вы успешно авторизовались")
-            router.push("/")
+
+
+        router.push("/")
         
     }
 }
@@ -188,7 +197,7 @@ font-size: 20px;
 
 
 
-.address__input {
+.home_address__input {
 min-width: 200px;
 min-height: 50px;
 font-size: 20px;

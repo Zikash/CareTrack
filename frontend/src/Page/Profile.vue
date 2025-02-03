@@ -32,8 +32,8 @@ import Administrator from '@/Components/Administrator.vue';
     export default {
         components: {
             //Patient,
-            //Doctor.
-            Administrator,         
+            //Doctor,
+            Administrator,        
         }
     }
 
