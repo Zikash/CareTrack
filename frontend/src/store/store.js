@@ -4,10 +4,7 @@ export default createStore({
     state: () => ({
         patient: null,
         doctor: null,
-        administrator: {
-            Phone: '8 800 535-35-35',
-            Mail: 'nePisat@otveta.net'
-        },
+        administrator: null,
         auth: "auth"
     }),
     getters: {
@@ -31,5 +28,6 @@ export default createStore({
         updateAuth(state, auth){
             state.auth = auth
         }
-    }
+    },
+    
 })
