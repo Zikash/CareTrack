@@ -61,13 +61,12 @@
 
                         <div class="menu">
 
-                            <add-btn class="add_btn"/>
-                            <search-btn class="search_btn"/>
+                            <search-btn @click="startShow('search')" class="search_btn"/>
                                                         
                         </div>
 
                         <named-bar :names="['ФИО', 'Телефон', 'Участок', 'Стаж']"/>
-                        <doctor-bar @SelectDoctor="SelectDoctor"  v-if="doctors.length >= 1" v-for="doctor in doctors.slice(page*limit-limit, page*limit)" 
+                        <doctor-bar @SelectDoctor="SelectDoctor"  v-if="doctors.length >= 1" v-for="doctor in searchedClient(doctors).slice(page*limit-limit, page*limit)" 
                         :doctor="doctor"
                         :selected="{
                             true: info.view && info.object_view === 'doctor' && info.doctor.id === doctor.id
@@ -90,14 +89,13 @@
 
                         <div class="menu">
 
-                            <add-btn class="add_btn"/>
-                            <search-btn class="search_btn"/>
+                            <search-btn @click="startShow('search')" class="search_btn"/>
                                                         
                         </div>
 
 
                         <named-bar :names="['ФИО', 'Телефон', 'Возраст', 'Пол']"/>
-                        <patient-bar @SelectPatient="SelectPatient" v-if="patients.length >= 1" v-for="patient in patients.slice(page*limit-limit, page*limit)" 
+                        <patient-bar @SelectPatient="SelectPatient" v-if="patients.length >= 1" v-for="patient in searchedClient(patients).slice(page*limit-limit, page*limit)" 
                         :patient="patient"
                         :selected="{
                             true: info.view && info.object_view === 'patient' && info.patient.id === patient.id
@@ -120,9 +118,8 @@
 
                         <div class="menu">
 
-                            <add-btn class="add_btn"/>
-                            <search-btn class="search_btn"/>
-                                                        
+                            <add-btn @click="startShow('create')" class="add_btn"/>
+
                         </div>
 
 
@@ -147,6 +144,26 @@
                         </div>
 
                     </div>
+
+                    <my-dialog v-model:show="show" v-if="show">
+                        <ul v-if="dialog === 'search'">
+                            <li class="content__element">
+                                <h3>Фамилия</h3>
+                                <input v-model="searched.surname" class="surname_input input" type="text">
+
+                            </li>
+                            <li class="content__element">
+                                <h3>Имя</h3>
+                                <input v-model="searched.name" class="name_input input" type="text">
+                            </li>
+                            <li class="content__element">
+                                <h3>Отчество</h3>
+                                <input v-model="searched.patronymic" class="patronymic_input input" type="text">
+                            </li>
+                        </ul>
+                        <create-osmotr @createOsmotr="createOsmotr" v-else-if="dialog === 'create'"/>
+                    </my-dialog>
+
                     
                 </div>
             </div>
@@ -188,6 +205,16 @@ import data from "@/Mixins/Data";
                 limit: 10,
                 page: 1,
                 totalPages: 0,
+                show: false,
+                dialog: '',
+                searchMass: [],
+                searched: {
+                    
+                    surname: '',
+                    name: '',
+                    patronymic: ''
+                    
+                },
                 info: {
                     view: false,
                     object_view: 'patient',
@@ -217,9 +244,27 @@ import data from "@/Mixins/Data";
                         break;
 
                 }
+
+                this.searched = {
+                    surname: '',
+                    name: '',
+                    patronymic: ''
+                }
             }
         },
         methods: {
+            createOsmotr(osmotr){
+
+                this.osmotrs.push(osmotr)
+            },
+            searchedClient(mass){
+                this.searchMass = mass.filter(elem => elem.surname.toLowerCase().includes(this.searched.surname.toLocaleLowerCase())
+                                && elem.name.toLowerCase().includes(this.searched.name.toLocaleLowerCase())
+                                && elem.patronymic.toLowerCase().includes(this.searched.patronymic.toLocaleLowerCase()))
+                this.totalPages = Math.ceil(this.searchMass.length / this.limit)
+                return this.searchMass
+                
+            },
             unAuthorizarion() {
                 this.$router.push('/')
                 this.$store.commit('updateAdministrator', null)
@@ -312,6 +357,11 @@ import data from "@/Mixins/Data";
                 this.info.osmotrs = []
                 
                 
+            },
+
+            startShow(dialog){
+                this.show = true
+                this.dialog = dialog
             }
         }
     }
@@ -321,6 +371,9 @@ import data from "@/Mixins/Data";
 
 <style scoped>
 
+li {
+    list-style-type: none;
+}
 
 input {
 background-color: #F0EEEE;

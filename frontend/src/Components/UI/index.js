@@ -9,6 +9,9 @@ import DoctorInfo from "@/Components/UI/DoctorInfo.vue";
 import OsmotrInfo from "@/Components/UI/OsmotrInfo.vue";
 import AddButton from "@/Components/UI/AddButton.vue";
 import SearchButton from "@/Components/UI/SearchButton.vue";
+import MyDialog from "@/Components/UI/MyDialog.vue";
+import MySelectUser from "@/Components/UI/MySelectUser.vue";
+import CreateOsmotr from "@/Components/UI/CreateOsmotr.vue";
 
 
 
@@ -23,5 +26,8 @@ export default [
     DoctorInfo,
     OsmotrInfo,
     AddButton,
-    SearchButton
+    SearchButton,
+    MyDialog,
+    MySelectUser,
+    CreateOsmotr
 ]

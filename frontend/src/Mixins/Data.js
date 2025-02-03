@@ -89,7 +89,7 @@ export default {
                 {
                     id: 10,
                     surname: "Nikolay",
-                    name: "Pobelov",
+                    name: "Pobeda",
                     patronymic: "Homonaft",
                     phone: "8 999 999 99-99",
                     serviced_area_number: 1,
@@ -97,7 +97,7 @@ export default {
                 },
                 {
                     id: 11,
-                    surname: "Nikolay",
+                    surname: "Nikoy",
                     name: "Pobelov",
                     patronymic: "Homonaft",
                     phone: "8 999 999 99-99",
@@ -108,7 +108,7 @@ export default {
                     id: 12,
                     surname: "Nikolay",
                     name: "Pobelov",
-                    patronymic: "Homonaft",
+                    patronymic: "Honaft",
                     phone: "8 999 999 99-99",
                     serviced_area_number: 1,
                     experience: 1
