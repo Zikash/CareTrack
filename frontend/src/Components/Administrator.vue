@@ -1,6 +1,6 @@
 <template>
     
-    <div class="main">
+    <div class="main_div">
         <form class="form" @submit.prevent>
         
             <div class="main">
@@ -30,8 +30,7 @@
                         'thenPage': thenPage === 'osmotrs'
                     }">Осмотры</h2>
                 </div>
-                
-            
+                     
                 <div class="main__view">
 
                     <div class="AdminProfile" v-if="thenPage === 'profile'">
@@ -41,16 +40,16 @@
                         
                         <h3>Номер телефона</h3>
                         <div class="content_profile">
-                            <h3>{{ $store.state.administrator.Phone }}</h3>
-                            <button @click="editPhone=true">Изменить</button>
-                            <input v-model="newPhone" v-if="editPhone" placeholder="Введите новый номер..."/>
-                            <button @click="updatePhone" v-if="editPhone">подтвердить</button>
+                            <h3>{{ $store.state.administrator.phone }}</h3>
+                            <button @click="editphone=true">Изменить</button>
+                            <input v-model="newphone" v-if="editphone" serviced_area_numberholder="Введите новый номер..."/>
+                            <button @click="updatephone" v-if="editphone">подтвердить</button>
                         </div>
                         <h3>Электронная почта</h3>
                         <div class="content_profile">
                             <h3>{{ $store.state.administrator.Mail }}</h3>
                             <button @click="editMail=true">Изменить</button>
-                            <input  v-model="newMail" v-if="editMail" placeholder="Введите новую почту..."/>
+                            <input  v-model="newMail" v-if="editMail" serviced_area_numberholder="Введите новую почту..."/>
                             <button @click="updateMail" v-if="editMail">подтвердить</button>
                         </div>
                         <div class="exitBox">
@@ -59,34 +58,129 @@
                     </div>                       
                     <div class="AllDoctors" v-if="thenPage === 'doctors'">
 
+
+                        <div class="menu">
+
+                            <search-btn @click="startShow('search')" class="search_btn"/>
+                                                        
+                        </div>
+
                         <named-bar :names="['ФИО', 'Телефон', 'Участок', 'Стаж']"/>
-                        <doctor-bar  v-if="doctors.length >= 1" v-for="doctor in doctors" 
-                        :doctor="doctor"/>
-                        <h3 class="empty" v-else>Докторов нет</h3>
+                        <doctor-bar @SelectDoctor="SelectDoctor"  v-if="doctors.length >= 1" v-for="doctor in searchedClient(doctors).slice(page*limit-limit, page*limit)" 
+                        :doctor="doctor"
+                        :selected="{
+                            true: info.view && info.object_view === 'doctor' && info.doctor.id === doctor.id
+                        }"/>
+                        <h3 class="empty" v-else>Врачей нет</h3>
+
+                        <div class="page_wrapper">
+                            <h3 v-for="Npage in totalPages"
+                            class="page_number"
+                            :key="Npage"
+                            :class="{
+                                'this_page': page === Npage
+                            }"
+                            @click="page = Npage">{{ Npage }}</h3>
+                        </div>
 
                     </div>
-                    <div class="AllPatients" v-if="thenPage === 'patients'">
+                    <div class="AllPatients" v-else-if="thenPage === 'patients'">
                         
+
+                        <div class="menu">
+
+                            <search-btn @click="startShow('search')" class="search_btn"/>
+                                                        
+                        </div>
+
+
                         <named-bar :names="['ФИО', 'Телефон', 'Возраст', 'Пол']"/>
-                        <patient-bar v-if="patients.length >= 1" v-for="patient in patients" 
-                        :patient="patient"/>
+                        <patient-bar @SelectPatient="SelectPatient" v-if="patients.length >= 1" v-for="patient in searchedClient(patients).slice(page*limit-limit, page*limit)" 
+                        :patient="patient"
+                        :selected="{
+                            true: info.view && info.object_view === 'patient' && info.patient.id === patient.id
+                        }"/>
                         <h3 class="empty" v-else>Пациентов нет</h3>
 
-                    </div>
-                    <div class="AllOsmotrs" v-if="thenPage === 'osmotrs'">
-                        
-                        <osmotr-bar 
-                        v-if="osmotrs.length >= 1"
-                        v-for="osmotr in osmotrs" 
-                        :osmotr="osmotr"/>
-                        <h3 class="empty" v-else>Осмотров нет</h3>
+                        <div class="page_wrapper">
+                            <h3 v-for="Npage in totalPages"
+                            class="page_number"
+                            :key="Npage"
+                            :class="{
+                                'this_page': page === Npage
+                            }"
+                            @click="page = Npage">{{ Npage }}</h3>
+                        </div>
 
                     </div>
+                    <div class="AllOsmotrs" v-else-if="thenPage === 'osmotrs'">
+                        
+
+                        <div class="menu">
+
+                            <add-btn @click="startShow('create')" class="add_btn"/>
+
+                        </div>
+
+
+                        <osmotr-bar 
+                        v-if="osmotrs.length >= 1"
+                        v-for="osmotr in osmotrs.slice(page*limit-limit, page*limit)" 
+                        :osmotr="osmotr"
+                        @SelectOsmotr="SelectOsmotr"
+                        :selected="{
+                            true: info.view && info.object_view === 'osmotr' && info.osmotr.id === osmotr.id
+                        }"/>
+                        <h3 class="empty" v-else>Осмотров нет</h3>
+
+                        <div class="page_wrapper">
+                            <h3 v-for="Npage in totalPages"
+                            class="page_number"
+                            :key="Npage"
+                            :class="{
+                                'this_page': page === Npage
+                            }"
+                            @click="page = Npage">{{ Npage }}</h3>
+                        </div>
+
+                    </div>
+
+                    <my-dialog v-model:show="show" v-if="show">
+                        <ul v-if="dialog === 'search'">
+                            <li class="content__element">
+                                <h3>Фамилия</h3>
+                                <input v-model="searched.surname" class="surname_input input" type="text">
+
+                            </li>
+                            <li class="content__element">
+                                <h3>Имя</h3>
+                                <input v-model="searched.name" class="name_input input" type="text">
+                            </li>
+                            <li class="content__element">
+                                <h3>Отчество</h3>
+                                <input v-model="searched.patronymic" class="patronymic_input input" type="text">
+                            </li>
+                        </ul>
+                        <create-osmotr @createOsmotr="createOsmotr" v-else-if="dialog === 'create'"/>
+                    </my-dialog>
+
                     
                 </div>
             </div>
             
             
+        </form>
+
+        <form class="info" @submit.prevent v-if="info.view">
+            
+            <div class="closeBox">
+                <Button @click="info.view = false" class="close">X</Button>
+            </div>
+
+            <patient-info :info="info" v-if="info.object_view === 'patient'"/>
+            <doctor-info :info="info" v-if="info.object_view === 'doctor'"/>
+            <osmotr-info :info="info" v-if="info.object_view === 'osmotr'"/>
+
         </form>
     </div>
 
@@ -94,110 +188,99 @@
 
 
 <script>
+import data from "@/Mixins/Data";
+
 
     export default {
+        mixins: [
+            data
+        ],
         data() {
             return {
                 thenPage: "profile",
-                editPhone: false,
+                editphone: false,
                 editMail: false,
-                newPhone: '',
+                newphone: '',
                 newMail: '',
                 limit: 10,
                 page: 1,
-                doctors: [
-                    {
-                        id: 1,
-                        Fio: "Nikolay Pobelov Homonaft",
-                        Phone: "8 999 999 99-99",
-                        Place: 1,
-                        Stage: 1
-                    },
-                    {
-                        id: 2,
-                        Fio: "Nikolay Pobelov Homonaft",
-                        Phone: "8 999 988 99-99",
-                        Place: 2,
-                        Stage: 4
-                    }
-                ],
-                patients: [
-                    {
-                        id: 1,
-                        Fio: "Haruton ebrog Afomon",
-                        Phone: "8 888 099 73-89",
-                        Gender: "М",
-                        Age: 6
-                    },
-                    {
-                        id: 2,
-                        Fio: "Haruton ebrog Afomon",
-                        Phone: "8 888 099 73-89",
-                        Gender: "М",
-                        Age: 38
-                    }
-
-                ],
-                osmotrs: [
-                    {
-                        id: 1,
-                        doctor: {
-                            id: 1,
-                            Fio: "Nikolay Pobelov Homonaft",
-                            Phone: "8 999 999 99-99",
-                            Place: 1,
-                            Stage: 1
-                        },
-                        patient: {
-                            id: 1,
-                            Fio: "Haruton ebrog Afomon",
-                            Phone: "8 888 099 73-89",
-                            Address: "moletare 17"
-                        },
-                        place: "Hospital",
-                        Date_this: "11.11.11",
-                        Time_this: "11:11"
-                    },
-                    {
-                        id: 2,
-                        doctor: {
-                            id: 2,
-                            Fio: "Nikolay Pobelov Homonaft",
-                            Phone: "8 999 988 99-99",
-                            Place: 2,
-                            Stage: 4
-                        },
-                        patient: {
-                            id: 2,
-                            Fio: "Haruton ebrog Afomon",
-                            Phone: "8 888 099 73-89",
-                            Address: "hoolersire h. 57"
-                        },
-                        place: "Home",
-                        Date_this: "11.11.11",
-                        Time_this: "11:66"
-                    }
-                ]
+                totalPages: 0,
+                show: false,
+                dialog: '',
+                searchMass: [],
+                searched: {
+                    
+                    surname: '',
+                    name: '',
+                    patronymic: ''
+                    
+                },
+                info: {
+                    view: false,
+                    object_view: 'patient',
+                    patient: {},
+                    doctor: {},
+                    osmotr: {},
+                    osmotrs: []
+                }
                     
             }
         },
+        watch: {
+            thenPage() {
+                this.page = 1
+                switch (this.thenPage){
+                    case "profile":
+                        return
+                        break;
+                    case "doctors":
+                        this.totalPages = Math.ceil(this.doctors.length / this.limit)
+                        break;
+                    case "patients":
+                        this.totalPages = Math.ceil(this.patients.length / this.limit)
+                        break;
+                    case "osmotrs":
+                        this.totalPages = Math.ceil(this.osmotrs.length / this.limit)
+                        break;
+
+                }
+
+                this.searched = {
+                    surname: '',
+                    name: '',
+                    patronymic: ''
+                }
+            }
+        },
         methods: {
+            createOsmotr(osmotr){
+
+                this.osmotrs.push(osmotr)
+            },
+            searchedClient(mass){
+                this.searchMass = mass.filter(elem => elem.surname.toLowerCase().includes(this.searched.surname.toLocaleLowerCase())
+                                && elem.name.toLowerCase().includes(this.searched.name.toLocaleLowerCase())
+                                && elem.patronymic.toLowerCase().includes(this.searched.patronymic.toLocaleLowerCase()))
+                this.totalPages = Math.ceil(this.searchMass.length / this.limit)
+                return this.searchMass
+                
+            },
             unAuthorizarion() {
                 this.$router.push('/')
                 this.$store.commit('updateAdministrator', null)
             },
-            updatePhone() {
-                if (this.newPhone < 9){
+            updatephone() {
+                if (this.newphone < 9){
                     alert("Номер слишком короткий")
                     return
                 }
 
-                if (confirm("Вы уверены что хотите поменять номер " + this.$store.state.administrator.Phone + " на новый " + this.newPhone)) {
-                    this.$store.state.administrator.Phone = this.newPhone
+                if (confirm("Вы уверены что хотите поменять номер " + this.$store.state.administrator.phone + " на новый " + this.newphone)) {
+                    this.$store.state.administrator.phone = this.newphone
                 }
 
-                this.newPhone = ''
-                this.editPhone = false
+                this.newphone = ''
+                this.editphone = false
 
             },
             updateMail() {
@@ -212,6 +295,73 @@
 
                 this.newMail = ''
                 this.editMail = false
+            },
+            SelectPatient(patient) {
+                if (patient.id == this.info.patient.id && this.info.view){
+                    this.info.view =false
+                    return
+                }
+
+                this.info.view = true
+                this.info.object_view = 'patient'
+                this.info.patient = patient
+                this.info.osmotrs = []
+                this.osmotrs.forEach(osmotr => {
+                    if (osmotr.patient.id == patient.id){
+                        this.info.osmotrs.push(osmotr)
+                    }
+                })
+                
+            },
+            SelectDoctor(doctor) {
+                if (doctor.id == this.info.doctor.id && this.info.view){
+                    this.info.view =false
+                    return
+                }
+
+                this.info.view = true
+                this.info.object_view = 'doctor'
+                this.info.doctor = doctor
+                this.info.osmotrs = []
+                this.osmotrs.forEach(osmotr => {
+                    if (osmotr.doctor.id == doctor.id){
+                        this.info.osmotrs.push(osmotr)
+                    }
+                })
+                
+            },
+            SelectOsmotr(osmotr) {
+                if (osmotr.id == this.info.osmotr.id && this.info.view){
+                    this.info.view =false
+                    return
+                }
+
+                this.info.view = true
+                this.info.object_view = 'osmotr'
+                this.info.osmotr = osmotr
+                
+                this.doctors.forEach(doctor => {
+                    if (doctor.id == osmotr.doctor.id){
+                        this.info.doctor = doctor
+                        return
+                    }
+                })
+
+                this.patients.forEach(patient => {
+                    if (patient.id == osmotr.patient.id) {
+                        this.info.patient = patient
+                        return
+                    }
+                })
+
+                this.info.osmotrs = []
+                
+                
+            },
+
+            startShow(dialog){
+                this.show = true
+                this.dialog = dialog
             }
         }
     }
@@ -220,6 +370,10 @@
 
 
 <style scoped>
+
+li {
+    list-style-type: none;
+}
 
 input {
 background-color: #F0EEEE;
@@ -230,8 +384,18 @@ background-color: #F0EEEE;
 }
 
 
-.form {
-display: flex;
+form {
+/*display: flex;*/
+margin: auto;
+}
+
+.main_div {
+display:flex;
+flex-wrap: wrap;
+margin-top: 20px;
+margin-left: auto;
+margin-right: auto;
+min-width: 500px;
 }
 
 .main {
@@ -349,6 +513,54 @@ border-radius: 0px 0px 10px 10px;
     margin-top: 10px;
     margin-left: auto;
     margin-right: 20px;
+}
+
+
+.closeBox {
+    padding-top: 40px;
+    display: flex;
+}
+
+.close {
+    height: 50px;
+    width: 50px;
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: red;
+    border-radius: 100%;
+}
+
+.page_wrapper {
+    margin-left:auto;
+    display: flex;
+    padding: 5px;
+}
+
+.page_number {
+    margin-left: 10px;
+    border: 2px black;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #69C553;
+}
+
+.this_page {
+    background-color: green;
+}
+
+.menu {
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.menu .search_btn{
+    margin-left: 10px;
+    margin-right: auto;
+}
+
+.menu .add_btn {
+    margin-left: auto;
 }
 
 </style>

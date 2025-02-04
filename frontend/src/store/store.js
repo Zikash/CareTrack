@@ -2,18 +2,9 @@ import { createStore } from "vuex";
 
 export default createStore({
     state: () => ({
-        patient: {
-            Fio: "Haruton ebrog Afomon",
-            Phone: "8 888 099 73-89",
-            Gender: "М",
-            Mail: 'nePisat@otveta.net',
-            Age: 6
-        },
+        patient: null,
         doctor: null,
-        administrator: {
-            Phone: '8 800 535-35-35',
-            Mail: 'nePisat@otveta.net'
-        },
+        administrator: null,
         auth: "auth"
     }),
     getters: {
@@ -37,5 +28,6 @@ export default createStore({
         updateAuth(state, auth){
             state.auth = auth
         }
-    }
+    },
+    
 })
