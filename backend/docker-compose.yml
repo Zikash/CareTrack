@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  pg:
+    image: postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: star
+      POSTGRES_PASSWORD: test_pw
+    ports:
+      - "5432:5432"
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - "5050:80"
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+        - pg
+    env_file:
+            - .env
+  frontend:
+    image: nginx:latest
+    ports:
+      - "3000:80"
+    volumes:
+      - ../frontend:/usr/share/nginx/html:ro
