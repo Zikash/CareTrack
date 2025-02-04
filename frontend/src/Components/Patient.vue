@@ -91,12 +91,6 @@
                     <div class="AllOsmotrs" v-else-if="thenPage === 'osmotrs'">
                         
 
-                        <div class="menu">
-
-                            <add-btn @click="startShow('create')" class="add_btn"/>
-
-                        </div>
-
 
                         <osmotr-bar 
                         v-if="osmotrs.length >= 1"
@@ -144,23 +138,18 @@
             
             
         </form>
-        <my-dialog :show="show" v-if="show">
-                        <ul v-if="dialog === 'search'">
-                            <li class="content__element">
-                                <h3>Фамилия</h3>
-                                <input v-model="searched.surname" class="surname_input input" type="text">
 
-                            </li>
-                            <li class="content__element">
-                                <h3>Имя</h3>
-                                <input v-model="searched.name" class="name_input input" type="text">
-                            </li>
-                            <li class="content__element">
-                                <h3>Отчество</h3>
-                                <input v-model="searched.patronymic" class="patronymic_input input" type="text">
-                            </li>
-                        </ul>
-                    </my-dialog>
+        <form class="info" @submit.prevent v-if="info.view">
+            
+            <div class="closeBox">
+                <Button @click="info.view = false" class="close">X</Button>
+            </div>
+
+            <patient-info :info="info" v-if="info.object_view === 'patient'"/>
+            <doctor-info :info="info" v-if="info.object_view === 'doctor'"/>
+            <osmotr-info :info="info" v-if="info.object_view === 'osmotr'"/>
+
+        </form>
         
     </div>
 
@@ -195,6 +184,14 @@ import data from '@/Mixins/Data';
                     name: '',
                     patronymic: ''
                     
+                },
+                info: {
+                    view: false,
+                    object_view: 'patient',
+                    patient: {},
+                    doctor: {},
+                    osmotr: {},
+                    osmotrs: []
                 }
             }
 
