@@ -12,57 +12,108 @@
                 
                     <div class="main__view">
 
+                        <select @change="reg_type = $event.target.value">
+                            <option :value="Rpatient">Пациент</option>
+                            <option :value="Rdoctor">Врач</option>
+                        </select>
+
                         <h3 class="info_">{{ info }}</h3>
 
                         <div class="main__content">
-                            <ul class="content__left">
-                                <li class="content__element">
-                                    <h3>Фамилия</h3>
-                                    <input v-model="patient.surname_Client" class="surname_input input" type="text">
+                            <div class="main__content" v-if="reg_type === 'Пациент'">
+                                <ul class="content__left">
+                                    <li class="content__element">
+                                        <h3>Фамилия</h3>
+                                        <input v-model="patient.surname_Client" class="surname_input input" type="text">
 
-                                </li>
-                                <li class="content__element">
-                                    <h3>Имя</h3>
-                                    <input v-model="patient.name_Client" class="name_input input" type="text">
-                                </li>
-                                <li class="content__element">
-                                    <h3>Отчество</h3>
-                                    <input v-model="patient.patronimyc_Client" class="patronimyc_input input" type="text">
-                                </li>
-                                <li class="content__element">
-                                    <h3>Пол</h3>
-                                    <input v-model="patient.gender" class="radio__gender" name="gender" type="radio" value="Male"><strong>М</strong>
-                                    <input v-model="patient.gender" class="radio__gender" name="gender" type="radio" value="Female"><Strong>Ж</Strong>
-                                </li>
-                                <li class="content__element">
-                                    <h3>Возраст</h3>
-                                    <input v-model="patient.age" class="age__input" min="0" type="number">
-                                </li>
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Имя</h3>
+                                        <input v-model="patient.name_Client" class="name_input input" type="text">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Отчество</h3>
+                                        <input v-model="patient.patronymic_Client" class="patronymic_input input" type="text">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Пол</h3>
+                                        <input v-model="patient.gender" class="radio__gender" name="gender" type="radio" value="Male"><strong>М</strong>
+                                        <input v-model="patient.gender" class="radio__gender" name="gender" type="radio" value="Female"><Strong>Ж</Strong>
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Возраст</h3>
+                                        <input v-model="patient.age" class="age__input" min="0" type="number">
+                                    </li>
 
-                            </ul>
-                            <ul class="content__right">
-                                <li class="content__element">
-                                    <h3>Телефон</h3>
-                                    <input v-model="patient.number_Phone" class="number__input input" type="text">
-                                </li>
-                                <li class="content__element">
-                                    <h3>Адрес</h3>
-                                    <textarea v-model="patient.address" class="address__input" type="text"></textarea>
-                                </li>
-                                <li class="content__element">
-                                    <h3>Пароль</h3>
-                                    <input v-model="password" class="password__input input" type="password">
-                                </li>
-                                <li class="content__element">
-                                    <h3>Подтверждение пароля</h3>
-                                    <input v-model="double_Password" class="double__password input" type="password">
-                                </li>
-                            </ul>
+                                </ul>
+                                <ul class="content__right">
+                                    <li class="content__element">
+                                        <h3>Телефон</h3>
+                                        <input v-model="patient.number_phone" class="number__input input" type="text">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Адрес</h3>
+                                        <textarea v-model="patient.home_address" class="home_address__input" type="text"></textarea>
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Логин</h3>
+                                        <input v-model="login" class="password__input input" type="text">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Пароль</h3>
+                                        <input v-model="password" class="password__input input" type="password">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Подтверждение пароля</h3>
+                                        <input v-model="double_Password" class="double__password input" type="password">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="main__content" v-else>
+                                <ul class="content__left">
+                                    <li class="content__element">
+                                        <h3>Фамилия</h3>
+                                        <input v-model="doctor.surname" class="surname_input input" type="text">
+
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Имя</h3>
+                                        <input v-model="doctor.name" class="name_input input" type="text">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Отчество</h3>
+                                        <input v-model="doctor.patronymic" class="patronymic_input input" type="text">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Стаж</h3>
+                                        <input v-model="doctor.experience" class="age__input" min="0" type="number">
+                                    </li>
+
+                                </ul>
+                                <ul class="content__right">
+                                    <li class="content__element">
+                                        <h3>Телефон</h3>
+                                        <input v-model="doctor.number_phone" class="number__input input" type="text">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Логин</h3>
+                                        <input v-model="login" class="password__input input" type="text">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Пароль</h3>
+                                        <input v-model="password" class="password__input input" type="password">
+                                    </li>
+                                    <li class="content__element">
+                                        <h3>Подтверждение пароля</h3>
+                                        <input v-model="double_Password" class="double__password input" type="password">
+                                    </li>
+                                </ul>
+                            </div>
 
                         </div>
 
                         <div class="wrapper">
-                            <button @click="AddUser($router, $store)" class="btn">Зарегистрироваться</button>
+                            <button @click="AddDoctor($router, $store)" class="btn">Зарегистрироваться</button>
                         </div>
 
                         
@@ -77,21 +128,34 @@
 
 
 <script>
+import Data from '@/Mixins/Data';
 import { initCustomFormatter } from 'vue';
 
 
     export default {
+
         data() {
             return {
                 patient: {
-                    surname_Client: "",
-                    name_Client: "",
-                    patronimyc_Client: "",
+                    surname: "",
+                    name: "",
+                    patronymic: "",
                     gender: "",
                     age: 1,
-                    number_Phone: "",
-                    address: ""
+                    number_phone: "",
+                    home_address: ""
                 },
+                doctor: {
+                    surname: "",
+                    name: "",
+                    patronymic: "",
+                    phone: "",
+                    experience: 0,
+                    serviced_area_number: 0
+
+                },
+                reg_type: "Пациент",
+                login: "",
                 password: "",
                 double_Password: "",
                 info: ""
@@ -102,17 +166,17 @@ import { initCustomFormatter } from 'vue';
 
                 this.info = ""
 
-                if (this.patient.surname_Client.length <= 1){
+                if (this.patient.surname.length <= 1){
                     this.info = "Фамилия короткая"
-                }else if (this.patient.name_Client.length <= 1){
+                }else if (this.patient.name.length <= 1){
                     this.info = "Имя короткое"
-                }else if (this.patient.patronimyc_Client.length <= 1){
+                }else if (this.patient.patronymic.length <= 1){
                     this.info = "Отчество короткое"
                 }else if (this.patient.gender === ""){
                     this.info = "Не выбран пол"
-                }else if (this.patient.number_Phone.length < 10){
+                }else if (this.patient.number_phone.length < 10){
                     this.info = "Некорректный номер телефона"
-                }else if (this.patient.address === ""){
+                }else if (this.patient.home_address === ""){
                     this.info = "Не введён адрес"
                 }else if (this.password.length < 8){
                     this.info = "Пароль короткий минимум 8 символов"
@@ -131,6 +195,36 @@ import { initCustomFormatter } from 'vue';
                     router.push("/")
                 }
                 
+            },
+            AddDoctor(router, store) {
+
+                this.info = ""
+
+                if (this.doctor.surname.length <= 1){
+                    this.info = "Фамилия короткая"
+                }else if (this.doctor.name.length <= 1){
+                    this.info = "Имя короткое"
+                }else if (this.doctor.patronymic.length <= 1){
+                    this.info = "Отчество короткое"
+                }else if (this.doctor.number_phone.length < 10){
+                    this.info = "Некорректный номер телефона"
+                }else if (this.password.length < 8){
+                    this.info = "Пароль короткий минимум 8 символов"
+                }else if (this.password != this.double_Password){
+                    this.info = "Пароли должны совпадать"
+                }
+
+
+
+                if (this.info === ""){
+                    //Сюда свойство регистрации
+                
+                    store.commit("updateDoctor", this.doctor)
+
+                    alert("Аккаунт успешно зарегистрирован")
+                    router.push("/")
+                }
+
             }
         }
     }
@@ -248,7 +342,7 @@ import { initCustomFormatter } from 'vue';
 
 
 
-    .address__input {
+    .home_address__input {
         min-width: 200px;
         min-height: 50px;
         font-size: 20px;

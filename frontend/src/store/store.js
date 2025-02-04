@@ -3,16 +3,8 @@ import { createStore } from "vuex";
 export default createStore({
     state: () => ({
         patient: null,
-        doctor: {
-            Phone: "8 999 999 99-99",
-            Mail: "niPobelov@otvetov.net",
-            Place: 1,
-            Stage: 1
-        },
-        administrator: {
-            Phone: '8 800 535-35-35',
-            Mail: 'nePisat@otveta.net'
-        },
+        doctor: null,
+        administrator: null,
         auth: "auth"
     }),
     getters: {
@@ -36,5 +28,6 @@ export default createStore({
         updateAuth(state, auth){
             state.auth = auth
         }
-    }
+    },
+    
 })

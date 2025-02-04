@@ -33,7 +33,7 @@ import Administrator from '@/Components/Administrator.vue';
         components: {
             //Patient,
             Doctor,
-            Administrator,         
+            Administrator,        
         }
     }
 

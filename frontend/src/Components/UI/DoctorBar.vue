@@ -1,10 +1,12 @@
 <template>
     <div class="doctorBar">
-        <div @click="hello" class="main">
-            <h3 class="Fio left">{{ doctor.Fio }}</h3>
-            <h3 @click.stop="copyPhone" class="Phone left">{{ doctor.Phone }}</h3>
-            <h3 class="Place left">{{ doctor.Place }}</h3>
-            <h3 class="Stage">{{ doctor.Stage }}</h3>
+        <div @click="$emit('SelectDoctor', doctor)" class="main" :class="{
+            'select': selected.true
+        }">
+            <h3 class="Fio left">{{ doctor.surname }} {{ doctor.name }} {{ doctor.patronymic }}</h3>
+            <h3 @click.stop="copyphone" class="phone left">{{ doctor.phone }}</h3>
+            <h3 class="serviced_area_number left">{{ doctor.serviced_area_number }}</h3>
+            <h3 class="experience">{{ doctor.experience }}</h3>
         </div>
     </div>
 </template>
@@ -15,18 +17,19 @@
     export default {
         name: 'doctor-bar',
         props: {
+            selected: {
+                Type: Boolean,
+                default: false
+            },
             doctor: {
                 Type: Object,
                 required: true
             }
         },
         methods: {
-            hello() {
-                alert(this.doctor.Fio)
-            },
-            copyPhone() {
-                navigator.clipboard.writeText(this.doctor.Phone)
-                alert("Скопирован номер " + this.doctor.Phone)
+            copyphone() {
+                navigator.clipboard.writeText(this.doctor.phone)
+                alert("Скопирован номер " + this.doctor.phone)
             }
         }
     }
@@ -52,6 +55,11 @@
         }
 
         
+    }
+
+
+    .select {
+    background-color: #02b820;
     }
 
 </style>
