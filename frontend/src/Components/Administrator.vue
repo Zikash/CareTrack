@@ -182,8 +182,8 @@
                 <Button @click="info.view = false" class="close">X</Button>
             </div>
 
-            <patient-info :info="info" v-if="info.object_view === 'patient'"/>
-            <doctor-info :info="info" v-if="info.object_view === 'doctor'"/>
+            <patient-info :info="info" :admin="true" v-if="info.object_view === 'patient'"/>
+            <doctor-info :info="info" :admin="true" v-if="info.object_view === 'doctor'"/>
             <osmotr-info :info="info" v-if="info.object_view === 'osmotr'"/>
 
         </form>

@@ -9,6 +9,7 @@
                     }">Пациент</h2>
 
                     <h2
+                    v-if="admin"
                     @click="infoPage = 'osmotrs'" 
                     class="name osmotrs" 
                     :class="{
@@ -47,7 +48,7 @@
 
                     </div>
                         
-                    <div class="patient_osmotrs" v-else-if="infoPage === 'osmotrs'">
+                    <div class="patient_osmotrs" v-else-if="infoPage === 'osmotrs' && admin">
                         <osmotr-bar 
                         @SelectOsmotr="SelectOsmotr"
                         v-for="osmotr in info.osmotrs.slice(page*limit-limit, page*limit)" 
@@ -67,7 +68,7 @@
 
 
                     </div>
-                    <div class="patient_osmotr" v-else-if="infoPage === 'osmotr'">
+                    <div class="patient_osmotr" v-else-if="infoPage === 'osmotr' && admin">
 
                         <div class="boxBack"> 
                             <button @click="backOsmotr" class="back"><</button>
@@ -125,6 +126,10 @@
             info: {
                 Type: Object,
                 required: true
+            },
+            admin: {
+                Type: Boolean,
+                default: false
             }
         },
         data() {

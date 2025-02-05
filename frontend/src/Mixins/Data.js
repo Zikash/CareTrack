@@ -290,7 +290,6 @@ export default {
                     Time_this: "11:11",
                     Predpis: "jjjjjjj"
                 },
-                ,
                 {
                     id: 3,
                     doctor: {
@@ -322,7 +321,6 @@ export default {
                     Time_this: "11:11",
                     Predpis: "jjjjjjj"
                 },
-                ,
                 {
                     id: 4,
                     doctor: {
@@ -354,7 +352,6 @@ export default {
                     Time_this: "11:11",
                     Predpis: "jjjjjjj"
                 },
-                ,
                 {
                     id: 5,
                     doctor: {
@@ -386,7 +383,6 @@ export default {
                     Time_this: "11:11",
                     Predpis: "jjjjjjj"
                 },
-                ,
                 {
                     id: 6,
                     doctor: {
