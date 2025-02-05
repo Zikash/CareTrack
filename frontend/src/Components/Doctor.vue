@@ -203,12 +203,7 @@ import data from "@/Mixins/Data";
                     <div class="content_profile">
                         <h3>{{ $store.state.doctor.phone }}</h3>
                     </div>
-
-                    <h3>Электронная почта</h3>
-                    <div class="content_profile">
-                        <h3>{{ $store.state.doctor.Mail }}</h3>
-                    </div>
-
+                    
                     <div class="content_profile">
                         <h3>Участок: {{ $store.state.doctor.Serviced_area_number }}</h3>
                         <button @click="editServiced_area_number=true">Изменить</button>
