@@ -60,7 +60,17 @@ methods: {
         
 
         //Сюда свойство авторизации
-        
+
+        if (this.login == 'doctor' && this.password == '1111'){
+            this.$store.commit("updateDoctor", {
+                phone: '8 999 999 99-99',
+                Mail: "niPobelov@sss",
+                Experience: 1,
+                Serviced_area_number: 1,
+                job_title: "Пульмонолог"
+            })
+        }
+
         if (this.login == 'admin' && this.password == '0000'){
             this.$store.commit("updateAdministrator", {
                 phone: '888888888',

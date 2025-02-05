@@ -7,7 +7,7 @@
             <!--<Patient/>-->
         </div>
         <div v-else-if="$store.state.doctor != null" class="Doctor">
-            <!--<Doctor/>-->
+            <Doctor/>
         </div>
         <div v-else-if="$store.state.administrator != null" class="Administrator">
             <Administrator/>
@@ -25,14 +25,14 @@
 
 <script>
 //import Patient from '@/Components/Patient.vue';
-//import Doctor from '@/Components/Doctor.vue';
+import Doctor from '@/Components/Doctor.vue';
 import Administrator from '@/Components/Administrator.vue';
 
 
     export default {
         components: {
             //Patient,
-            //Doctor,
+            Doctor,
             Administrator,        
         }
     }
