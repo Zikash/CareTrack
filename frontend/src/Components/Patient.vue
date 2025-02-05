@@ -89,22 +89,13 @@
 
                     </div>
                     <div class="AllOsmotrs" v-else-if="thenPage === 'osmotrs'">
-                        
-
-                        <div class="menu">
-
-                            <add-btn @click="startShow('create')" class="add_btn"/>
-
-                        </div>
-
-
                         <osmotr-bar 
-                        v-if="osmotrs.length >= 1"
-                        v-for="osmotr in osmotrs.slice(page*limit-limit, page*limit)" 
-                        :osmotr="osmotr"
+                        v-if="osmotrs_patient.length >= 1"
+                        v-for="osmotr_patient in osmotrs_patient.slice(page*limit-limit, page*limit)" 
+                        :osmotr="osmotr_patient"
                         @SelectOsmotr="SelectOsmotr"
                         :selected="{
-                            true: info.view && info.object_view === 'osmotr' && info.osmotr.id === osmotr.id
+                            true: info.view && info.object_view === 'osmotr' && info.osmotr.id === osmotr_patient.id
                         }"/>
                         <h3 class="empty" v-else>Осмотров нет</h3>
 
@@ -120,7 +111,7 @@
 
                     </div>
 
-                    <my-dialog :show="show" v-if="show">
+                    <my-dialog v-model:show="show" v-if="show">
                         <ul v-if="dialog === 'search'">
                             <li class="content__element">
                                 <h3>Фамилия</h3>
@@ -144,24 +135,18 @@
             
             
         </form>
-        <my-dialog :show="show" v-if="show">
-                        <ul v-if="dialog === 'search'">
-                            <li class="content__element">
-                                <h3>Фамилия</h3>
-                                <input v-model="searched.surname" class="surname_input input" type="text">
 
-                            </li>
-                            <li class="content__element">
-                                <h3>Имя</h3>
-                                <input v-model="searched.name" class="name_input input" type="text">
-                            </li>
-                            <li class="content__element">
-                                <h3>Отчество</h3>
-                                <input v-model="searched.patronymic" class="patronymic_input input" type="text">
-                            </li>
-                        </ul>
-                    </my-dialog>
-        
+        <form class="info" @submit.prevent v-if="info.view">
+            
+            <div class="closeBox">
+                <Button @click="info.view = false" class="close">X</Button>
+            </div>
+
+            <patient-info :info="info" v-if="info.object_view === 'patient'"/>
+            <doctor-info :info="info" v-if="info.object_view === 'doctor'"/>
+            <osmotr-info :info="info" v-if="info.object_view === 'osmotr'"/>
+
+        </form>
     </div>
 
 </template>
@@ -189,12 +174,21 @@ import data from '@/Mixins/Data';
                 show: false,
                 dialog: '',
                 searchMass: [],
+                osmotrs_patient: [],
                 searched: {
                     
                     surname: '',
                     name: '',
                     patronymic: ''
                     
+                },
+                info: {
+                    view: false,
+                    object_view: 'patient',
+                    patient: {},
+                    doctor: {},
+                    osmotr: {},
+                    osmotrs: []
                 }
             }
 
@@ -213,7 +207,7 @@ import data from '@/Mixins/Data';
                         this.totalPages = Math.ceil(this.patients.length / this.limit)
                         break;
                     case "osmotrs":
-                        this.totalPages = Math.ceil(this.osmotrs.length / this.limit)
+                        this.totalPages = Math.ceil(this.osmotrs_patient.length / this.limit)
                         break;
 
                 }
@@ -255,19 +249,6 @@ import data from '@/Mixins/Data';
                 this.newphone = ''
                 this.editphone = false
 
-            },
-            updateMail() {
-                if (this.newMail.split('@').length < 2){
-                    alert("Не корректная почта")
-                    return
-                }
-
-                if (confirm("Вы уверены что хотите поменять почту " + this.$store.state.patient.Mail + " на новую " + this.newMail)) {
-                    this.$store.state.patient.Mail = this.newMail
-                }
-
-                this.newMail = ''
-                this.editMail = false
             },
             updateAdress() {
                 if (this.newAdress < 5){
@@ -332,6 +313,13 @@ import data from '@/Mixins/Data';
                 this.show = true
                 this.dialog = dialog
             }
+        },
+        mounted() {
+            this.osmotrs.forEach(osmotr => {
+                if(this.$store.state.patient.id == osmotr.patient.id){
+                    this.osmotrs_patient.push(osmotr)
+                }
+            })
         }
     }
 
