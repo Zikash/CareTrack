@@ -17,12 +17,12 @@
                     <ul class="content">
                         <li class="content__element">
                             <h3>Логин</h3>
-                            <input v-model="login" class="surname_input input" type="text">
+                            <input v-model.trim="login" class="surname_input input" type="text">
 
                         </li>
                         <li class="content__element">
                             <h3>Пароль</h3>
-                            <input v-model="password" class="password__input input" type="password">
+                            <input v-model.trim="password" class="password__input input" type="password">
                         </li>
                     </ul>
 

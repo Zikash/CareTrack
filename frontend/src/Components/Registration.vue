@@ -57,15 +57,15 @@
                                     </li>
                                     <li class="content__element">
                                         <h3>Логин</h3>
-                                        <input v-model="login" class="password__input input" type="text">
+                                        <input v-model.trim="login" class="password__input input" type="text">
                                     </li>
                                     <li class="content__element">
                                         <h3>Пароль</h3>
-                                        <input v-model="password" class="password__input input" type="password">
+                                        <input v-model.trim="password" class="password__input input" type="password">
                                     </li>
                                     <li class="content__element">
                                         <h3>Подтверждение пароля</h3>
-                                        <input v-model="double_Password" class="double__password input" type="password">
+                                        <input v-model.trim="double_Password" class="double__password input" type="password">
                                     </li>
                                 </ul>
                             </div>
@@ -97,15 +97,15 @@
                                     </li>
                                     <li class="content__element">
                                         <h3>Логин</h3>
-                                        <input v-model="login" class="password__input input" type="text">
+                                        <input v-model.trim="login" class="password__input input" type="text">
                                     </li>
                                     <li class="content__element">
                                         <h3>Пароль</h3>
-                                        <input v-model="password" class="password__input input" type="password">
+                                        <input v-model.trim="password" class="password__input input" type="password">
                                     </li>
                                     <li class="content__element">
                                         <h3>Подтверждение пароля</h3>
-                                        <input v-model="double_Password" class="double__password input" type="password">
+                                        <input v-model.trim="double_Password" class="double__password input" type="password">
                                     </li>
                                 </ul>
                             </div>
