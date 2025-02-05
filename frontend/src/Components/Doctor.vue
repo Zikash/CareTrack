@@ -147,7 +147,7 @@ import data from "@/Mixins/Data";
 </script>
 
 <template>
-<div class="main">
+<div class="main_div">
     <form class="form" @submit.prevent>
         <div class="main">
             <div class="headbar">
@@ -187,14 +187,14 @@ import data from "@/Mixins/Data";
                         <h3>{{ $store.state.doctor.Mail }}</h3>
                     </div>
 
-                    <div class="content_profile2">
+                    <div class="content_profile">
                         <h3>Участок: {{ $store.state.doctor.Serviced_area_number }}</h3>
                         <button @click="editServiced_area_number=true">Изменить</button>
                         <input  v-model="newServiced_area_number" v-if="editServiced_area_number" placeholder="Введите новый участок..."/>
                         <button @click="updateServiced_area_number" v-if="editServiced_area_number">Подтвердить</button>
                     </div>
 
-                    <div class="content_profile2">
+                    <div class="content_profile">
                         <h3>Ваш стаж: {{ $store.state.doctor.Experience }}</h3>
                         <h3 v-if="$store.state.doctor.Stage === 1">год</h3>
                         <h3 v-else-if="$store.state.doctor.Stage < 5">года</h3>
@@ -286,6 +286,7 @@ import data from "@/Mixins/Data";
 
 <style scoped>
 
+
 li {
     list-style-type: none;
 }
@@ -300,7 +301,7 @@ background-color: #F0EEEE;
 
 
 form {
-display: flex;
+/*display: flex;*/
 margin: auto;
 }
 
@@ -388,29 +389,10 @@ border-radius: 0px 0px 10px 10px;
     margin-bottom: 15px;
 }
 
-.content_profile2 {
-    display: flex;
-    margin-top: 8px;
-    margin-bottom: 15px;
-}
-
-.content_profile2 h3 {
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
 .content_profile h3 {
     background-color: #D9D9D9;
     padding: 5px 10px;
     border-radius: 5px;
-}
-
-.content_profile2 button {
-    background-color: #69C553;
-    border-radius: 5px;
-    padding: 5px;
-    margin-left: 20px;
-    font-size: 15px;
 }
 
 .content_profile input {
@@ -496,5 +478,6 @@ border-radius: 0px 0px 10px 10px;
 .menu .add_btn {
     margin-left: auto;
 }
+
 
 </style>
