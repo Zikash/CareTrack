@@ -24,16 +24,16 @@
                                 <ul class="content__left">
                                     <li class="content__element">
                                         <h3>Фамилия</h3>
-                                        <input v-model="patient.surname_Client" class="surname_input input" type="text">
+                                        <input v-model="patient.surname" class="surname_input input" type="text">
 
                                     </li>
                                     <li class="content__element">
                                         <h3>Имя</h3>
-                                        <input v-model="patient.name_Client" class="name_input input" type="text">
+                                        <input v-model="patient.name" class="name_input input" type="text">
                                     </li>
                                     <li class="content__element">
                                         <h3>Отчество</h3>
-                                        <input v-model="patient.patronymic_Client" class="patronymic_input input" type="text">
+                                        <input v-model="patient.patronymic" class="patronymic_input input" type="text">
                                     </li>
                                     <li class="content__element">
                                         <h3>Пол</h3>
@@ -113,7 +113,7 @@
                         </div>
 
                         <div class="wrapper">
-                            <button @click="AddDoctor($router, $store)" class="btn">Зарегистрироваться</button>
+                            <button @click="AddUser($router, $store)" class="btn">Зарегистрироваться</button>
                         </div>
 
                         
@@ -149,7 +149,7 @@ import { initCustomFormatter } from 'vue';
                     surname: "",
                     name: "",
                     patronymic: "",
-                    phone: "",
+                    number_phone: "",
                     experience: 0,
                     serviced_area_number: 0
 
@@ -164,67 +164,68 @@ import { initCustomFormatter } from 'vue';
         methods: {
             AddUser(router, store) {
 
-                this.info = ""
+                if (this.reg_type == 'Пациент') {
+                    this.info = ""
 
-                if (this.patient.surname.length <= 1){
-                    this.info = "Фамилия короткая"
-                }else if (this.patient.name.length <= 1){
-                    this.info = "Имя короткое"
-                }else if (this.patient.patronymic.length <= 1){
-                    this.info = "Отчество короткое"
-                }else if (this.patient.gender === ""){
-                    this.info = "Не выбран пол"
-                }else if (this.patient.number_phone.length < 10){
-                    this.info = "Некорректный номер телефона"
-                }else if (this.patient.home_address === ""){
-                    this.info = "Не введён адрес"
-                }else if (this.password.length < 8){
-                    this.info = "Пароль короткий минимум 8 символов"
-                }else if (this.password != this.double_Password){
-                    this.info = "Пароли должны совпадать"
+                    if (this.patient.surname.length <= 1){
+                        this.info = "Фамилия короткая"
+                    }else if (this.patient.name.length <= 1){
+                        this.info = "Имя короткое"
+                    }else if (this.patient.patronymic.length <= 1){
+                        this.info = "Отчество короткое"
+                    }else if (this.patient.gender === ""){
+                        this.info = "Не выбран пол"
+                    }else if (this.patient.number_phone.length < 10){
+                        this.info = "Некорректный номер телефона"
+                    }else if (this.patient.home_address === ""){
+                        this.info = "Не введён адрес"
+                    }else if (this.password.length < 8){
+                        this.info = "Пароль короткий минимум 8 символов"
+                    }else if (this.password != this.double_Password){
+                        this.info = "Пароли должны совпадать"
+                    }
+
+
+                    
+                    if (this.info === ""){
+                        //Сюда свойство регистрации
+
+                        store.commit("updatePatient", this.patient)
+
+                        alert("Аккаунт успешно зарегистрирован")
+                        router.push("/")
+                    }
                 }
+                else {
+                    this.info = ""
+
+                    if (this.doctor.surname.length <= 1){
+                        this.info = "Фамилия короткая"
+                    }else if (this.doctor.name.length <= 1){
+                        this.info = "Имя короткое"
+                    }else if (this.doctor.patronymic.length <= 1){
+                        this.info = "Отчество короткое"
+                    }else if (this.doctor.number_phone.length < 10){
+                        this.info = "Некорректный номер телефона"
+                    }else if (this.password.length < 8){
+                        this.info = "Пароль короткий минимум 8 символов"
+                    }else if (this.password != this.double_Password){
+                        this.info = "Пароли должны совпадать"
+                    }
 
 
+
+                    if (this.info === ""){
+                        //Сюда свойство регистрации
+                    
+                        store.commit("updateDoctor", this.doctor)
+
+                        alert("Аккаунт успешно зарегистрирован")
+                        router.push("/")
+                    }
+                }
                 
-                if (this.info === ""){
-                    //Сюда свойство регистрации
-
-                    store.commit("updatePatient", this.patient)
-
-                    alert("Аккаунт успешно зарегистрирован")
-                    router.push("/")
-                }
                 
-            },
-            AddDoctor(router, store) {
-
-                this.info = ""
-
-                if (this.doctor.surname.length <= 1){
-                    this.info = "Фамилия короткая"
-                }else if (this.doctor.name.length <= 1){
-                    this.info = "Имя короткое"
-                }else if (this.doctor.patronymic.length <= 1){
-                    this.info = "Отчество короткое"
-                }else if (this.doctor.number_phone.length < 10){
-                    this.info = "Некорректный номер телефона"
-                }else if (this.password.length < 8){
-                    this.info = "Пароль короткий минимум 8 символов"
-                }else if (this.password != this.double_Password){
-                    this.info = "Пароли должны совпадать"
-                }
-
-
-
-                if (this.info === ""){
-                    //Сюда свойство регистрации
-                
-                    store.commit("updateDoctor", this.doctor)
-
-                    alert("Аккаунт успешно зарегистрирован")
-                    router.push("/")
-                }
-
             }
         }
     }
