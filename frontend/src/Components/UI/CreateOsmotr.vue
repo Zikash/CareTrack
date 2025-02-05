@@ -35,7 +35,7 @@
             <h3>
                 Симптомы
             </h3>
-            <textarea :value="osmotr.Simptomes" @change="osmotr.Simptomes = $event.currentTarget.value"></textarea>
+            <textarea @input="writeSimptomes"></textarea>
 
         </li>
         <li class="content_element">
@@ -97,11 +97,18 @@ import Data from '@/Mixins/Data';
                     doctor: {
                         id: 1
                     },
+                    Simptomes: [],
                     Time_this: '11:11'
                 }
             }
         },
         methods: {
+            writeSimptomes(event) {
+                this.osmotr.Simptomes = []
+                event.target.value.split(' ').forEach(simptom => {
+                    this.osmotr.Simptomes.push(simptom)
+                })
+            },
             createOsmotr() {
                 this.doctors.forEach(doctor => {
                     if(doctor.id == Number(this.osmotr.doctor.id)){
