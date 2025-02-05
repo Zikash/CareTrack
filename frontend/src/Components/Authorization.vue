@@ -61,6 +61,18 @@ methods: {
 
         //Сюда свойство авторизации
         
+        if (this.login == 'patient' && this.password == '2222'){
+            this.$store.commit("updatePatient", {
+                surname: "Haruton",
+                name: "ebrog",
+                patronymic: "Afomon",
+                phone: "8 888 099 73-89",
+                home_address: "UUlice 88",
+                Gender: "М",
+                Age: 6
+            })
+        }
+
         if (this.login == 'admin' && this.password == '0000'){
             this.$store.commit("updateAdministrator", {
                 phone: '888888888',
