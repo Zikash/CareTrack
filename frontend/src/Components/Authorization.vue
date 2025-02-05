@@ -63,11 +63,14 @@ methods: {
 
         if (this.login == 'doctor' && this.password == '1111'){
             this.$store.commit("updateDoctor", {
+                id: 9,
                 phone: '8 999 999 99-99',
-                Mail: "niPobelov@sss",
                 Experience: 1,
                 Serviced_area_number: 1,
-                job_title: "Пульмонолог"
+                job_title: "Пульмонолог",
+                surname: "Nikolay",
+                name: "Pobelov",
+                patronymic: "Homonaft"
             })
         }
 

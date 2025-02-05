@@ -15,7 +15,7 @@
         <h3>
             Врач
         </h3>
-        <select-user @change="osmotr.doctor = $event.currentTarget.value" :users="doctors"/>
+        <select-user @change="osmotr.doctor = $event.currentTarget.value" :users="This_doctor"/>
         <h3>
             Пациент
         </h3>

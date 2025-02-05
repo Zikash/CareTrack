@@ -17,6 +17,8 @@ import data from "@/Mixins/Data";
                 show: false,
                 dialog: '',
                 searchMass: [],
+                osmotrs_doctor: [],
+                This_doctor: [],
                 searched: {
                     
                     surname: '',
@@ -32,7 +34,7 @@ import data from "@/Mixins/Data";
                     osmotr: {},
                     osmotrs: []
                 }
-                    
+                                    
             }
         },
         watch: {
@@ -49,7 +51,7 @@ import data from "@/Mixins/Data";
                         this.totalPages = Math.ceil(this.patients.length / this.limit)
                         break;
                     case "osmotrs":
-                        this.totalPages = Math.ceil(this.osmotrs.length / this.limit)
+                        this.totalPages = Math.ceil(this.osmotrs_doctor.length / this.limit)
                         break;
 
                 }
@@ -140,7 +142,15 @@ import data from "@/Mixins/Data";
             startShow(dialog){
                 this.show = true
                 this.dialog = dialog
-            }
+            },
+        },
+        mounted() {
+            this.osmotrs.forEach(osmotr => {
+                if(this.$store.state.doctor.id == osmotr.doctor.id){
+                    this.osmotrs_doctor.push(osmotr)
+                }
+            })
+            this.This_doctor.push(this.$store.state.doctor)
         }
     }
 
@@ -177,14 +187,14 @@ import data from "@/Mixins/Data";
                         <h2 class="root">Должность: {{ $store.state.doctor.job_title }}</h2>
                     </div>
 
+                    <h3>Имя Фамилия Отчество</h3>
+                    <div class="content_profile">
+                        <h3>{{ $store.state.doctor.name }} {{ $store.state.doctor.surname }} {{ $store.state.doctor.patronymic }}</h3>
+                    </div>
+
                     <h3>Номер телефона</h3>
                     <div class="content_profile">
                         <h3>{{ $store.state.doctor.phone }}</h3>
-                    </div>
-
-                    <h3>Электронная почта</h3>
-                    <div class="content_profile">
-                        <h3>{{ $store.state.doctor.Mail }}</h3>
                     </div>
 
                     <div class="content_profile2">
@@ -233,22 +243,22 @@ import data from "@/Mixins/Data";
                         <add-btn @click="startShow('create')" class="add_btn"/>
                     </div>
                     <osmotr-bar 
-                        v-if="osmotrs.length >= 1"
-                        v-for="osmotr in osmotrs.slice(page*limit-limit, page*limit)" 
-                        :osmotr="osmotr"
+                        v-if="osmotrs_doctor.length >= 1"
+                        v-for="osmotr_doctor in osmotrs_doctor.slice(page*limit-limit, page*limit)" 
+                        :osmotr="osmotr_doctor"
                         @SelectOsmotr="SelectOsmotr"
                         :selected="{
-                            true: info.view && info.object_view === 'osmotr' && info.osmotr.id === osmotr.id
+                            true: info.view && info.object_view === 'osmotr' && info.osmotr.id === osmotr_doctor.id
                     }"/>
                     <h3 class="empty" v-else>Осмотров нет</h3>
                     <div class="page_wrapper">
-                            <h3 v-for="Npage in totalPages"
-                            class="page_number"
-                            :key="Npage"
-                            :class="{
-                                'this_page': page === Npage
-                            }"
-                            @click="page = Npage">{{ Npage }}</h3>
+                        <h3 v-for="Npage in totalPages"
+                        class="page_number"
+                        :key="Npage"
+                        :class="{
+                            'this_page': page === Npage
+                        }"
+                        @click="page = Npage">{{ Npage }}</h3>
                     </div>
                 </div>
 
