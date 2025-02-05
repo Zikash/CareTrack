@@ -62,11 +62,10 @@ import data from "@/Mixins/Data";
                     patronymic: ''
                 }
             },
-            osmotrs(){
-                this.osmotrs_doctor = []
-                this.osmotrs.forEach(osmotr => {
-                    if(this.$store.state.doctor.id == osmotr.doctor.id){
-                        this.osmotrs_doctor.push(osmotr)
+            osmotrs_doctors(){
+                this.osmotrs_doctor.forEach(osmotr => {
+                    if (!this.osmotrs.includes(osmotr)){
+                        this.osmotrs.push(osmotr)
                     }
                 })
             }
@@ -286,7 +285,7 @@ import data from "@/Mixins/Data";
                         </li>
                     </ul>
                     <create-osmotr
-                        v-model:osmotrs="osmotrs"
+                        v-model:osmotrs="osmotrs_doctor"
                         :doctors="This_doctor"
                         :patients="patients"
                         v-model:view="show"
