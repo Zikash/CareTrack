@@ -61,6 +61,14 @@ import data from "@/Mixins/Data";
                     name: '',
                     patronymic: ''
                 }
+            },
+            osmotrs(){
+                this.osmotrs_doctor = []
+                this.osmotrs.forEach(osmotr => {
+                    if(this.$store.state.doctor.id == osmotr.doctor.id){
+                        this.osmotrs_doctor.push(osmotr)
+                    }
+                })
             }
         },
         methods: {
@@ -277,7 +285,12 @@ import data from "@/Mixins/Data";
                             <input v-model="searched.patronymic" class="patronymic_input input" type="text">
                         </li>
                     </ul>
-                    <create-osmotr @createOsmotr="createOsmotr" v-else-if="dialog === 'create'"/>
+                    <create-osmotr
+                        v-model:osmotrs="osmotrs"
+                        :doctors="This_doctor"
+                        :patients="patients"
+                        v-model:view="show"
+                        v-else-if="dialog === 'create'"/>
                 </my-dialog>
             </div>
         </div>
