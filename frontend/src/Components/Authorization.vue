@@ -74,6 +74,7 @@ methods: {
         
         if (this.login == 'patient' && this.password == '2222'){
             this.$store.commit("updatePatient", {
+                id: 9,
                 surname: "Haruton",
                 name: "ebrog",
                 patronymic: "Afomon",
