@@ -114,7 +114,7 @@
 
                     </div>
 
-                    <my-dialog :show="show" v-if="show">
+                    <my-dialog v-model:show="show" v-if="show">
                         <ul v-if="dialog === 'search'">
                             <li class="content__element">
                                 <h3>Фамилия</h3>

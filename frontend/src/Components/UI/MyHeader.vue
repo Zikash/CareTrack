@@ -26,7 +26,7 @@
 
         <div class="auth" v-if="$store.getters.isAuth">
             <div>
-                <btn-auth @click="$router.push('/profile')" class="btn"><h3>Профиль</h3></btn-auth>   
+                <btn-auth @click="$router.push('/profile')" class="btn"><h3>Профиль</h3></btn-auth>
             </div>
         </div>
         <div class="nauth" v-else>
