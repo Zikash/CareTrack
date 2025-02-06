@@ -133,6 +133,9 @@ import { initCustomFormatter } from 'vue';
 
 
     export default {
+        mixins: [
+            Data
+        ],
 
         data() {
             return {
